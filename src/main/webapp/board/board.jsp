@@ -56,7 +56,7 @@
 		
 </style>
 <body>
-	<h1>자유게시판</h1>
+	<h1>자유게시판test</h1>
 	<table >
 		<tr>
 			<td colspan="5">전체 게시글 수 : ${pagination.count}</td>
