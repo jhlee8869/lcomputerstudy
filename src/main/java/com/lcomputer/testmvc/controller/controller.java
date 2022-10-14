@@ -355,6 +355,7 @@ public class controller extends HttpServlet {
 				//board6.setB_date(request.getParameter("date"));
 				
 				boardService = BoardService.getInstance();
+				boardService.replyinsertBoard(board6);
 				boardService.replyProcessBoard(board6);
 				//boardService.replyinsertBoard(board6);
 				
