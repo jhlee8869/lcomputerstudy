@@ -56,7 +56,7 @@
 		
 </style>
 <body>
-	<h1>자유게시판test</h1>
+	<h1>자유게시판</h1>
 	<table >
 		<tr>
 			<td colspan="5">전체 게시글 수 : ${pagination.count}</td>
@@ -74,7 +74,7 @@
 			 <tr>
 			 	<td><a href="board-detail.do?b_idx=${board.b_idx}">${board.rownum}</a></td>
 			 	<td>${board.user.u_name}</td>
-			 	<td><a href="board-reply.do?b_idx=${board.b_idx}">${board.b_title}</a></td>
+			 	<td><a href="board-detail.do?b_idx=${board.b_idx}">${board.b_title}</a></td>
 				<td>${board.b_date}</td>
 				<td>${board.b_viewcount}</td>
 		     <tr>

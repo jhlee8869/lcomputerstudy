@@ -59,5 +59,17 @@ public class BoardService {
 		dao.getBoardviewcount(board);
 	}
 	
+	public Board replyBoard(Board board) {
+		return dao.replyBoard(board);
+	}
+	
+	public void replyProcessBoard(Board board) {
+		dao.replyProcessBoard(board);
+	}
+	
+	public void replyinsertBoard(Board board) {
+		dao.replyinsertBoard(board);
+	}
+	
 	
 }

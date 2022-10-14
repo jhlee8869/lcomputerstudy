@@ -12,40 +12,125 @@
 		font-size:20px;font-color:#0a0a0a;border:2px solid black;
 	}
 	form {
-		border:2px solid black;
-	}
-	
-	table {
-		border-collapse:collapse;
-		margin:20px auto;
+		border:2px solid black;width:600px;height:300px;
 	}
 	//
-	
-	table tr th {
-		font-weight:700;
+	.input_inp1 {
+		width:300px;height:20px;
 	}
-	table tr td, table tr th {
-		border:1px solid #818181;
-		width:500px;
+	
+	.input_inp2 {
+		width:400px;height:80px;
+	}
+
+	.p_title {
+		width:400px;
+		font-weight:800;font-size:30px;
+		text-align:left;
+	}
+	
+	.p_writer {
+		width:250px;height:30px;
+		text-align:left;
+	}
+	.p_date {
+		width:250px;height:30px;
+		text-align:left;
+	}
+	.p_content {
+		border:2px solid #818181;
+		width:500px;height:100px;
+		text-align:left;
+	}
+	.p_reply {
 		text-align:center;
 	}
-	a {
-		text-decoration:none;
-		color:#000;
-		font-weight:700;
+
+	.p_line:after {
+  		content: "";
+  		display: block;
+  		width: 600px;
+  		border-bottom: 3px solid #bcbcbc;
 	}
+	.div_body {
+		margin:auto;
+		width:800px;height:300px;
+	}
+	.div_title {
+		width:100%;height:60px;
+		float:left;
+	}
+	.div_writer {
+		width:20%;height:30px;
+		float:left;
+	}
+	.div_date {
+		width:80%;height:30px;
+		float:left;
+	}
+	.div_content {
+		width:100%;height:150px;
+		float:left;
+	}
+	.div_line {
+		width:100%;height:20px;
+		float:left;
+	}
+	
+	.div_body2 {
+		margin:auto;
+		width:200px;height:50px;
+		float:left;
+	}
+	.div_reply {
+		width:50%;height:50px;
+		float:left;
+	}
+	.div_list {
+		width:50%;height:50px;
+		display:flex;
+		align-items:center;
+		flex-direction:row;
+		justify-content:center;
+		
+	}
+	.a_list {
+		width:100%;height:50px;
+		text-align:center;
+	}
+	
+	
 </style>
 <body>
-<h1>답글 달기</h1>
+<h1>답글달기 </h1>
 		
 	<form action="board-reply-process.do" name="board" method="post">
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
-	
-	<p> 제목 : ${board.b_title}</p>
-	<p> 작성일자 : <input type="text" name="date" value="${board.b_date}"></p>
-	<p> 내용 : <input type="text" name="content" value="${board.b_content}"></p>
-	<p> <input type="submit" value="답글 수정"></p>
-
-</form>
+	<input type="hidden" name="u_idx" value="${user.u_idx}">
+	<input type="hidden" name="b_group" value="${board.b_group}">
+	<input type="hidden" name="b_order" value="${board.b_order}">
+	<input type="hidden" name="b_depth" value="${board.b_depth}">
+		
+		<div class="div_body">
+			<div class="div_title">
+				<p class=p_title> 제목 : <input class=input_inp1 type="text" name="title" value="Re-${board.b_title}"></p>
+			</div>
+			<div class="div_line">
+				<p class=p_line></p>
+			</div>
+			<div class="div_content">
+				<p class=p_content> 내용 : <input class=input_inp2 type="text" name="content"></p>
+			</div>
+		</div>
+		
+	<div class="div_body2">
+		<div class="div_reply">
+			<p class="p_reply"><input type="submit" value="답글달기"></p>
+		</div>
+		<div class="div_list">
+			<a class="a_list" href="board-list.do">목록보기</a>
+		</div>
+	</div>
+	</form>	
 </body>
 </html>

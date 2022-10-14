@@ -75,26 +75,34 @@
 	
 	.div_body2 {
 		margin:auto;
-		width:300px;height:50px;
+		width:400px;height:50px;
 		float:left;
 	}
 	.div_edit {
-		width:33%;height:30px;
+		width:20%;height:30px;
 		float:left;
 	}
 	.div_delete {
-		width:33%;height:30px;
+		width:20%;height:30px;
+		float:left;
+	}
+	.div_insert {
+		width:20%;height:30px;
+		float:left;
+	}
+	.div_reply {
+		width:20%;height:30px;
 		float:left;
 	}
 	.div_list {
-		width:33%;height:30px;
+		width:20%;height:30px;
 		float:left;
 	}
 	
 	
 </style>
 <body>
-<h1>게시글 </h1>
+<h1>자유게시글 </h1>
 		
 	<form action="board-detail.do" name="board" method="post">
 	<input type="hidden" name="b_idx" value="${board.b_idx} ${board.user.u_idx}">
@@ -125,6 +133,12 @@
 		</div>
 		<div class="div_delete">
 			<a href="board-delete.do?b_idx=${board.b_idx}">삭제</a>
+		</div>
+		<div class="div_insert">
+			<a href="board-insert.do?b_idx=${board.b_idx}">글쓰기</a>
+		</div>
+		<div class="div_reply">
+			<a href="board-reply.do?b_idx=${board.b_idx}">답글달기</a>
 		</div>
 		<div class="div_list">
 			<a href="board-list.do">목록보기</a>
