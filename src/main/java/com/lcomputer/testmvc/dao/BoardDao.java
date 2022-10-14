@@ -60,18 +60,33 @@ public class BoardDao {
 			
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "insert into board(b_title, b_content, b_date, b_viewcount, u_idx, b_group, b_order, b_depth) values(?, ?, now(), ?, ?, ?, ?, ?)";
-			//pstmt.close();
+			String sql = "insert into board(b_idx, b_title, b_content, b_date, b_viewcount, u_idx, b_group, b_order, b_depth) values(?, ?, ?, now(), ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
+			/*
 			pstmt.setString(1, board.getB_title());
 			pstmt.setString(2, board.getB_content());
-
 			pstmt.setInt(3, board.getB_viewcount());
 			pstmt.setInt(4, board.getUser().getU_idx());
 			pstmt.setInt(5, board.getB_group());
 			pstmt.setInt(6, board.getB_order());
 			pstmt.setInt(7, board.getB_depth());
+			*/
+			pstmt.setInt(1, board.getB_idx());
+			pstmt.setString(2, board.getB_title());
+			pstmt.setString(3, board.getB_content());
+			pstmt.setInt(4, board.getB_viewcount());
+			pstmt.setInt(5, board.getUser().getU_idx());
+			pstmt.setInt(6, board.getB_group());
+			pstmt.setInt(7, board.getB_order());
+			pstmt.setInt(8, board.getB_depth());
 			pstmt.executeUpdate();
+			
+			pstmt.close();
+			
+			sql = "update board set b_group = last_insert_id() where b_idx = last_insert_id()";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.executeUpdate();
+			
 		} catch( Exception ex) {
 			ex.printStackTrace();
 		} finally {
