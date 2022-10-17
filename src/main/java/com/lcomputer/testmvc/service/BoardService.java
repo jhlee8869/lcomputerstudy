@@ -58,11 +58,11 @@ public class BoardService {
 	public void getBoardviewcount(Board board) {
 		dao.getBoardviewcount(board);
 	}
-	
+	/*
 	public Board replyBoard(Board board) {
 		return dao.replyBoard(board);
 	}
-	
+	*/
 	public void replyProcessBoard(Board board) {
 		dao.replyProcessBoard(board);
 	}

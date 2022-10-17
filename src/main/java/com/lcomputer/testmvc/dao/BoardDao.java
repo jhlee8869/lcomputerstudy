@@ -68,8 +68,8 @@ public class BoardDao {
 			pstmt.setInt(3, board.getB_viewcount());
 			pstmt.setInt(4, board.getUser().getU_idx());
 			pstmt.setInt(5, board.getB_group());
-			pstmt.setInt(6, board.getB_order());
-			pstmt.setInt(7, board.getB_depth());
+			pstmt.setInt(6, board.getB_order()+1);
+			pstmt.setInt(7, board.getB_depth()+1);
 			
 			pstmt.executeUpdate();
 			
@@ -171,6 +171,9 @@ public class BoardDao {
 	        	//board.setB_writer(rs.getString("b_writer"));
 	        	board.setB_date(rs.getString("b_date"));
 	        	board.setB_viewcount(rs.getInt("b_viewcount"));
+	        	board.setB_group(rs.getInt("b_group"));
+	        	board.setB_order(rs.getInt("b_order"));
+	        	board.setB_depth(rs.getInt("b_depth"));
 	        	board.getUser().getU_idx();
 	        }
 		} catch( Exception ex) {
@@ -243,6 +246,9 @@ public class BoardDao {
 		      	board.setB_content(rs.getString("b_content"));
 		      	board.setB_date(rs.getString("b_date"));
 		      	board.setB_viewcount(rs.getInt("b_viewcount"));
+		      	board.setB_group(rs.getInt("b_group"));
+		      	board.setB_order(rs.getInt("b_order"));
+		      	board.setB_depth(rs.getInt("b_depth"));
 		      	
 		      	User user = new User();	        	
 		      	user.setU_idx(rs.getInt("u_idx"));
@@ -294,7 +300,7 @@ public class BoardDao {
 		}
 		
 	}
-	
+	/*
 	public Board replyBoard(Board board) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -327,7 +333,7 @@ public class BoardDao {
 		
 		return board;
 	}
-	
+	*/
 	public void replyProcessBoard(Board board) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -358,10 +364,10 @@ public class BoardDao {
 		PreparedStatement pstmt = null;
 			
 		try {
-			conn = DBConnection.getConnection();
+			conn = DBConnection.getConnection();			
 			String sql = "insert into board(b_title, b_content, b_date, b_viewcount, u_idx, b_group, b_order, b_depth) values(?, ?, now(), ?, ?, ?, ?, ?)";
-			//pstmt.close();
 			pstmt = conn.prepareStatement(sql);
+			
 			pstmt.setString(1, board.getB_title());
 			pstmt.setString(2, board.getB_content());
 			pstmt.setInt(3, board.getB_viewcount());
@@ -370,6 +376,12 @@ public class BoardDao {
 			pstmt.setInt(6, board.getB_order()+1);
 			pstmt.setInt(7, board.getB_depth()+1);
 			pstmt.executeUpdate();
+			pstmt.close();
+			
+			sql = "update board set b_group = last_insert_id() where b_idx = last_insert_id()";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.executeUpdate();
+			
 		} catch( Exception ex) {
 			ex.printStackTrace();
 		} finally {

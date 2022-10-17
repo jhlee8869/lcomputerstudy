@@ -331,10 +331,16 @@ public class controller extends HttpServlet {
 
 				Board board5 = new Board();
 				board5.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				board5.setB_title(request.getParameter("b_title"));
+				board5.setB_content(request.getParameter("b_content"));
+				//board5.setB_viewcount(Integer.parseInt(request.getParameter("b_viewcount")));
+				board5.setB_group(Integer.parseInt(request.getParameter("b_group")));
+				board5.setB_order(Integer.parseInt(request.getParameter("b_order")));
+				//board5.setB_depth(Integer.parseInt(request.getParameter("b_depth")));
 				board5.setUser(user);
 				
 				boardService = BoardService.getInstance();
-				board5 = boardService.replyBoard(board5);
+				boardService.replyProcessBoard(board5);
 						
 				view = "board/board-reply";
 				request.setAttribute("board", board5);
@@ -343,21 +349,21 @@ public class controller extends HttpServlet {
 				
 			case "/board-reply-process.do":
 				
+				session = request.getSession();
+				user = (User)session.getAttribute("user");
+				
 				Board board6 = new Board();
 				board6.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				board6.setB_title(request.getParameter("b_title"));
 				board6.setB_content(request.getParameter("b_content"));
 				board6.setB_group(Integer.parseInt(request.getParameter("b_group")));
 				board6.setB_order(Integer.parseInt(request.getParameter("b_order")));
-				board6.setB_depth(Integer.parseInt(request.getParameter("b_depth")));
-				//board2.setB_writer(request.getParameter("writer"));
-				//board2.setB_count(Integer.parseInt(request.getParameter("count")));
-				//board6.setB_date(request.getParameter("date"));
+				//board6.setB_depth(Integer.parseInt(request.getParameter("b_depth")));
+				board6.setUser(user);
 				
 				boardService = BoardService.getInstance();
-				boardService.replyinsertBoard(board6);
-				boardService.replyProcessBoard(board6);
 				//boardService.replyinsertBoard(board6);
+				boardService.replyinsertBoard(board6);
 				
 				view = "/board/board-reply-result";
 				

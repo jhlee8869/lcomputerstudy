@@ -23,7 +23,7 @@
 	}
 
 	.p_title {
-		width:200px;
+		width:400px;
 		font-weight:800;font-size:30px;
 		text-align:left;
 	}
@@ -105,7 +105,11 @@
 <h1>자유게시글 </h1>
 		
 	<form action="board-detail.do" name="board" method="post">
-	<input type="hidden" name="b_idx" value="${board.b_idx} ${board.user.u_idx}">
+	<input type="hidden" name="b_idx" value="${board.b_idx}">
+	<input type="hidden" name="u_idx" value="${board.user.u_idx}">
+	<input type="hidden" name="b_group" value="${board.b_group}">
+	<input type="hidden" name="b_order" value="${board.b_order}">
+	<input type="hidden" name="b_depth" value="${board.b_depth}">
 		
 		<div class="div_body">
 			<div class="div_title">
@@ -138,7 +142,7 @@
 			<a href="board-insert.do?b_idx=${board.b_idx}">글쓰기</a>
 		</div>
 		<div class="div_reply">
-			<a href="board-reply.do?b_idx=${board.b_idx}">답글달기</a>
+			<a href="board-reply.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">답글달기</a>
 		</div>
 		<div class="div_list">
 			<a href="board-list.do">목록보기</a>
