@@ -243,11 +243,9 @@ public class controller extends HttpServlet {
 				user5.setU_idx(user.getU_idx());*/
 				
 				Board board = new Board();
-				board.setB_title(request.getParameter("title"));
-				board.setB_content(request.getParameter("content"));
-				//board.setB_writer(request.getParameter("writer"));
-				board.setB_date(request.getParameter("date"));
-				//board.setB_viewcount(Integer.parseInt(request.getParameter("viewcount")));
+				board.setB_title(request.getParameter("b_title"));
+				board.setB_content(request.getParameter("b_content"));
+				//board.setB_viewcount(Integer.parseInt(request.getParameter("b_viewcount")));
 				board.setUser(user);
 				
 				boardService = BoardService.getInstance();
@@ -294,11 +292,8 @@ public class controller extends HttpServlet {
 			case "/board-edit-process.do":
 				
 				Board board2 = new Board();
-				board2.setB_title(request.getParameter("title"));
-				board2.setB_content(request.getParameter("content"));
-				//board2.setB_writer(request.getParameter("writer"));
-				//board2.setB_count(Integer.parseInt(request.getParameter("count")));
-				board2.setB_date(request.getParameter("date"));
+				board2.setB_title(request.getParameter("b_title"));
+				board2.setB_content(request.getParameter("b_content"));
 				board2.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				
 				boardService = BoardService.getInstance();
@@ -330,13 +325,10 @@ public class controller extends HttpServlet {
 				user = (User)session.getAttribute("user");
 
 				Board board5 = new Board();
-				board5.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				board5.setB_title(request.getParameter("b_title"));
 				board5.setB_content(request.getParameter("b_content"));
-				//board5.setB_viewcount(Integer.parseInt(request.getParameter("b_viewcount")));
 				board5.setB_group(Integer.parseInt(request.getParameter("b_group")));
 				board5.setB_order(Integer.parseInt(request.getParameter("b_order")));
-				//board5.setB_depth(Integer.parseInt(request.getParameter("b_depth")));
 				board5.setUser(user);
 				
 				boardService = BoardService.getInstance();
@@ -353,12 +345,12 @@ public class controller extends HttpServlet {
 				user = (User)session.getAttribute("user");
 				
 				Board board6 = new Board();
-				board6.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				//board6.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				board6.setB_title(request.getParameter("b_title"));
 				board6.setB_content(request.getParameter("b_content"));
 				board6.setB_group(Integer.parseInt(request.getParameter("b_group")));
 				board6.setB_order(Integer.parseInt(request.getParameter("b_order")));
-				//board6.setB_depth(Integer.parseInt(request.getParameter("b_depth")));
+				board6.setB_depth(Integer.parseInt(request.getParameter("b_depth")));
 				board6.setUser(user);
 				
 				boardService = BoardService.getInstance();

@@ -42,8 +42,8 @@
 	<form action="board-insert-process.do" name="board" method="post">
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
 	
-	<p> 제목 : <input type="text" name="title" value="${board.b_title}"></p>
-	<p> 내용 : <input type="text" name="content" value="${board.b_content}"></p>
+	<p> 제목 : <input type="text" name="b_title" value="${board.b_title}"></p>
+	<p> 내용 : <input type="text" name="b_content" value="${board.b_content}"></p>
 	<p> <input type="submit" value="작성"></p>
 
 </form>

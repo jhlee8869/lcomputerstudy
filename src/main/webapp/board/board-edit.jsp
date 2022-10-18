@@ -101,10 +101,10 @@
 				<p class=p_line></p>
 			</div>
 			<div class="div_title">
-				<p class=p_title> 제목 : <input class=input_inp1 type="text" name="title" value="${board.b_title}"></p>
+				<p class=p_title> 제목 : <input class=input_inp1 type="text" name="b_title" value="${board.b_title}"></p>
 			</div>
 			<div class="div_content">
-				<p class=p_content> 내용 : <input class=input_inp2 type="text" name="content" value="${board.b_content}"></p>
+				<p class=p_content> 내용 : <input class=input_inp2 type="text" name="b_content" value="${board.b_content}"></p>
 			</div>
 			<div class="div_editbutton">
 				<p> <input type="submit" value="수정"></p>

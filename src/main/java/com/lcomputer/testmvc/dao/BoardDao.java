@@ -68,8 +68,8 @@ public class BoardDao {
 			pstmt.setInt(3, board.getB_viewcount());
 			pstmt.setInt(4, board.getUser().getU_idx());
 			pstmt.setInt(5, board.getB_group());
-			pstmt.setInt(6, board.getB_order()+1);
-			pstmt.setInt(7, board.getB_depth()+1);
+			pstmt.setInt(6, board.getB_order());
+			pstmt.setInt(7, board.getB_depth());
 			
 			pstmt.executeUpdate();
 			
@@ -340,12 +340,10 @@ public class BoardDao {
 			
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "update board set b_order=b_order+1 where b_group=? and b_order>?";
+			String sql = "update board set b_order = b_order+1 where b_group = ? and b_order > ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, board.getB_group());
 			pstmt.setInt(2, board.getB_order());
-			//pstmt.setInt(3, board.getB_depth());
-			//pstmt.setInt(3, board.getB_idx());
 			pstmt.executeUpdate();
 		} catch( Exception ex) {
 			ex.printStackTrace();
@@ -362,26 +360,35 @@ public class BoardDao {
 	public void replyinsertBoard(Board board) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-			
+		int idx = board.getB_idx();
 		try {
-			conn = DBConnection.getConnection();			
+			conn = DBConnection.getConnection();
+
 			String sql = "insert into board(b_title, b_content, b_date, b_viewcount, u_idx, b_group, b_order, b_depth) values(?, ?, now(), ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
-			
 			pstmt.setString(1, board.getB_title());
 			pstmt.setString(2, board.getB_content());
 			pstmt.setInt(3, board.getB_viewcount());
 			pstmt.setInt(4, board.getUser().getU_idx());
 			pstmt.setInt(5, board.getB_group());
+			/*
+			if(board.getB_group() == 0) 
+				pstmt.setInt(5, board.getB_group());
+			
+			else 
+				pstmt.setInt(5, idx);
+			*/
 			pstmt.setInt(6, board.getB_order()+1);
 			pstmt.setInt(7, board.getB_depth()+1);
 			pstmt.executeUpdate();
 			pstmt.close();
-			
-			sql = "update board set b_group = last_insert_id() where b_idx = last_insert_id()";
+			/*
+			sql = "update board set b_order = last_insert_id() where b_idx = last_insert_id()";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
-			
+			pstmt.close();
+			*/
+	
 		} catch( Exception ex) {
 			ex.printStackTrace();
 		} finally {
