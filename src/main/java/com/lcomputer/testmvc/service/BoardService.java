@@ -63,8 +63,8 @@ public class BoardService {
 		return dao.replyBoard(board);
 	}
 	*/
-	public void replyProcessBoard(Board board) {
-		dao.replyProcessBoard(board);
+	public void replyUpBoard(Board board) {
+		dao.replyUpBoard(board);
 	}
 	
 	public void replyinsertBoard(Board board) {
