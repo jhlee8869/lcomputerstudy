@@ -343,8 +343,8 @@ public class controller extends HttpServlet {
 				board6.setB_title(request.getParameter("b_title"));
 				board6.setB_content(request.getParameter("b_content"));
 				board6.setB_group(Integer.parseInt(request.getParameter("b_group")));
-				board6.setB_order(Integer.parseInt(request.getParameter("b_order"))+1);
-				board6.setB_depth(Integer.parseInt(request.getParameter("b_depth"))+1);
+				board6.setB_order(Integer.parseInt(request.getParameter("b_order")));
+				board6.setB_depth(Integer.parseInt(request.getParameter("b_depth")));
 				board6.setUser(user);
 				
 				boardService = BoardService.getInstance();

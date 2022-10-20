@@ -316,8 +316,8 @@ public class BoardDao {
 			pstmt.setInt(3, board.getB_viewcount());
 			pstmt.setInt(4, board.getUser().getU_idx());
 			pstmt.setInt(5, board.getB_group());
-			pstmt.setInt(6, board.getB_order());
-			pstmt.setInt(7, board.getB_depth());
+			pstmt.setInt(6, board.getB_order()+1);
+			pstmt.setInt(7, board.getB_depth()+1);
 			pstmt.executeUpdate();
 
 		
@@ -340,7 +340,7 @@ public class BoardDao {
 		try {
 			conn = DBConnection.getConnection();
 			//String sql = "update board set b_order = b_order+1 where b_group = ? and b_order > ?";
-			String sql = "update board set b_order = b_order+1 where b_group = ? and b_order >= ? and b_depth > ?";
+			String sql = "update board set b_order = b_order+1 where b_group = ? and b_order > ? or b_depth > ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, board.getB_group());
 			pstmt.setInt(2, board.getB_order());
