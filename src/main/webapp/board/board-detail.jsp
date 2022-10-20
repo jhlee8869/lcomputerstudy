@@ -14,12 +14,9 @@
 	form {
 		border:2px solid black;width:600px;height:300px;
 	}
-	//
 	a {
 		text-decoration:none;
-		width:50px;font-weight:500;background-color:#ffffff;color:#202020;
-		border:3px solid #818181;
-		text-align:center
+		color:#FFFFFF;
 	}
 
 	.p_title {
@@ -73,30 +70,84 @@
 		float:left;
 	}
 	
-	.div_body2 {
-		margin:auto;
-		width:400px;height:50px;
+	#div_body_all {
+		margin:10px auto;
+		width:400px;height:30px;
 		float:left;
 	}
-	.div_edit {
-		width:20%;height:30px;
+	
+	#div_body1 {
+		margin:10px auto;
+		width:400px;height:30px;
 		float:left;
 	}
-	.div_delete {
-		width:20%;height:30px;
+	
+	#div_bd {
+		width:15%;height:25px;
+		background-color:#66B2FF;
+		border-radius:10px;
+		float:left;
+		text-align:center;
+		font-size:17px;font-family:굴림;
+		
+	}
+	
+	#div_bd2 {
+		width:20%;height:25px;
+		background-color:#66B2FF;
+		border-radius:10px;
+		float:left;
+		text-align:center;
+		font-size:17px;font-family:굴림;
+		
+	}
+	
+	.div_bd_edit {
+		margin-left:3%;
+		
+	}
+	.div_bd_delete {
+		margin-left:3%;
+		
+	}
+	.div_bd_insert {
+		margin-left:3%;
+	
+	}
+	.div_bd_reply {
+		margin-left:3%;
+
+	}
+	.div_bd_list {
+		margin-left:3%;
+	
+	}
+	
+	#div_body2 {
+		margin-bottom:5%;
+		width:400px;height:30px;
 		float:left;
 	}
-	.div_insert {
-		width:20%;height:30px;
+	
+	#div_body3 {
+		margin:70px auto;
+		width:400px;height:30px;
 		float:left;
 	}
-	.div_reply {
-		width:20%;height:30px;
+	
+	#div_bd3 {
+		width:20%;height:25px;
+		background-color:#66B2FF;
+		border-radius:10px;
 		float:left;
+		text-align:center;
+		font-size:17px;font-family:굴림;
+		
 	}
-	.div_list {
-		width:20%;height:30px;
-		float:left;
+	
+	.div_bd_comment {
+		margin-left:3%;
+		
 	}
 	
 	
@@ -131,21 +182,32 @@
 		</div>
 		
 	</form>
-	<div class="div_body2">
-		<div class="div_edit">
-			<a href="board-edit.do?b_idx=${board.b_idx}">수정</a>
+	<div id="div_body_all">
+		<div id="div_body1">
+			<div id="div_bd" class="div_bd_edit">
+				<a href="board-edit.do?b_idx=${board.b_idx}">수정</a>
+			</div>
+			<div id="div_bd" class="div_bd_delete">
+				<a href="board-delete.do?b_idx=${board.b_idx}">삭제</a>
+			</div>
+			<div id="div_bd" class="div_bd_insert">
+				<a href="board-insert.do?b_idx=${board.b_idx}">글쓰기</a>
+			</div>
+			<div id="div_bd2" class="div_bd_reply">
+				<a href="board-reply.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">답글달기</a>
+			</div>
+			<div id="div_bd2" class="div_bd_list">
+				<a href="board-list.do">목록보기</a>
+			</div>
 		</div>
-		<div class="div_delete">
-			<a href="board-delete.do?b_idx=${board.b_idx}">삭제</a>
+	
+		<div id="div_body2">
+			<textarea rows="7" cols="80" id="" name="" placeholder="댓글을 입력해주세요."></textarea>
 		</div>
-		<div class="div_insert">
-			<a href="board-insert.do?b_idx=${board.b_idx}">글쓰기</a>
-		</div>
-		<div class="div_reply">
-			<a href="board-reply.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">답글달기</a>
-		</div>
-		<div class="div_list">
-			<a href="board-list.do">목록보기</a>
+		<div id="div_body3">
+			<div id="div_bd3" class="div_bd_comment">
+				<a href="board-list.do">댓글달기</a>
+			</div>
 		</div>
 	</div>
 	
