@@ -14,7 +14,7 @@ public class Board {
 	//private int b_count;
 	//private int u_idx;
 	private User user;
-	
+
 	public int getB_idx() {
 		return b_idx;
 	}

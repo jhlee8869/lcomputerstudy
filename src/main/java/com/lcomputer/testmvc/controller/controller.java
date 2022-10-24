@@ -356,6 +356,13 @@ public class controller extends HttpServlet {
 				
 				break;
 				
+			//댓글 화면	
+			case "/comment-list.do":
+				
+				view = "comment/comment-list";
+				
+				break;
+				
 		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher(view+".jsp");

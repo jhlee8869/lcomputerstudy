@@ -157,10 +157,6 @@
 		
 	<form action="board-detail.do" name="board" method="post">
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
-	<input type="hidden" name="u_idx" value="${board.user.u_idx}">
-	<input type="hidden" name="b_group" value="${board.b_group}">
-	<input type="hidden" name="b_order" value="${board.b_order}">
-	<input type="hidden" name="b_depth" value="${board.b_depth}">
 		
 		<div class="div_body">
 			<div class="div_title">
@@ -203,11 +199,11 @@
 
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
 		<div id="div_body2">
-			<textarea rows="7" cols="80" id="" name="c_content" placeholder="댓글을 입력해주세요."></textarea>
+			<textarea rows="7" cols="80" id="" name="" placeholder="댓글을 입력해주세요."></textarea>
 		</div>
 		<div id="div_body3">
 			<div id="div_bd3" class="div_bd_comment">
-				<a href="comment-list.do?b_idx=${board.b_idx}">댓글달기</a>
+				<a href="comment-list.do">댓글달기</a>
 			</div>
 		</div>
 	</div>
