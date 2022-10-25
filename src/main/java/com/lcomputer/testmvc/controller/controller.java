@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.lcomputer.testmvc.service.BoardService;
+import com.lcomputer.testmvc.service.CommentService;
 import com.lcomputer.testmvc.service.UserService;
 import com.lcomputer.testmvc.vo.Pagination;
 import com.lcomputer.testmvc.vo.User;
 import com.lcomputer.testmvc.vo.Board;
+import com.lcomputer.testmvc.vo.Comment;
 
 @WebServlet("*.do")
 public class controller extends HttpServlet {
@@ -36,6 +38,7 @@ public class controller extends HttpServlet {
 		
 		HttpSession session = null;
 		BoardService boardService = null;
+		CommentService commentService = null;
 		command = checkSession(request, response, command);
 		
 		int usercount = 0;	//추가
@@ -359,7 +362,45 @@ public class controller extends HttpServlet {
 			//댓글 화면	
 			case "/comment-list.do":
 				
+				Comment comment = new Comment();
+				
+				session = request.getSession();
+				user = (User)session.getAttribute("user");
+				comment = (Comment)session.getAttribute("comment");
+				
+				//boardviewcount = boardService.getBoardviewcount();
+				Board board7 = new Board();
+				board7.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				board7.setUser(user);
+				board7.setComment(comment);
+				
+				boardService = BoardService.getInstance();
+				commentService = CommentService.getInstance();
+				//board7 = commentService.commentinsert(board7);
+				
 				view = "comment/comment-list";
+				
+				request.setAttribute("board", board7);
+				
+				break;
+				
+			case "/comment-list-process.do":
+
+				session = request.getSession();
+				user = (User)session.getAttribute("user");
+				comment = (Comment)session.getAttribute("comment");
+				
+				Board board8 = new Board();
+				board8.setComment(comment);
+				board8.setUser(user);
+				
+				boardService = BoardService.getInstance();
+				//boardService.replyinsertBoard(board6);
+				
+				view = "board/board-detail";
+				//view = "/board/board-reply-result";
+				
+				request.setAttribute("board", board8);
 				
 				break;
 				

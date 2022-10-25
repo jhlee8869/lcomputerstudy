@@ -11,9 +11,6 @@
 	pre{
 		font-size:20px;font-color:#0a0a0a;border:2px solid black;
 	}
-	form {
-		border:2px solid black;width:600px;height:300px;
-	}
 	a {
 		text-decoration:none;
 		color:#FFFFFF;
@@ -38,6 +35,12 @@
 		width:500px;height:100px;
 		text-align:left;
 	}
+	
+	.p_comment {
+		border:2px solid #818181;
+		width:500px;height:100px;
+		text-align:left;
+	}
 
 	.p_line:after {
   		content: "";
@@ -46,7 +49,8 @@
   		border-bottom: 3px solid #bcbcbc;
 	}
 	.div_body {
-		margin:auto;
+		border:2px solid black;
+		margin-left:1%;	
 		width:800px;height:300px;
 	}
 	.div_title {
@@ -155,8 +159,17 @@
 <body>
 <h1>자유게시글 </h1>
 		
-	<form action="board-detail.do" name="board" method="post">
+	<!--  <form action="board-detail.do" name="board" method="post">
+	-->	
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
+	<input type="hidden" name="u_idx" value="${board.user.u_idx}">
+	<input type="hidden" name="b_group" value="${board.b_group}">
+	<input type="hidden" name="b_order" value="${board.b_order}">
+	<input type="hidden" name="b_depth" value="${board.b_depth}">
+	
+	<input type="hidden" name="c_group" value="${board.comment.c_group}">
+	<input type="hidden" name="c_order" value="${board.comment.c_order}">
+	<input type="hidden" name="c_depth" value="${board.comment.c_depth}">
 		
 		<div class="div_body">
 			<div class="div_title">
@@ -177,7 +190,6 @@
 			</div>
 		</div>
 		
-	</form>
 	<div id="div_body_all">
 		<div id="div_body1">
 			<div id="div_bd" class="div_bd_edit">
@@ -195,17 +207,20 @@
 			<div id="div_bd2" class="div_bd_list">
 				<a href="board-list.do">목록보기</a>
 			</div>
-		</div>
-
+	</div>
+		
+	<form action="board-detail.do" name="board" method="post">
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
 		<div id="div_body2">
-			<textarea rows="7" cols="80" id="" name="" placeholder="댓글을 입력해주세요."></textarea>
+			<p class=p_comment> <input class=input_inp1 type="text" name="c_content" value="" placeholder="댓글을 입력해주세요."></p>
+
 		</div>
 		<div id="div_body3">
-			<div id="div_bd3" class="div_bd_comment">
-				<a href="comment-list.do">댓글달기</a>
+			<div class="div_bd_comment">	
+				<p class="p_reply"><input type="submit" value="댓글달기"></p>
 			</div>
 		</div>
+	</form>
 	</div>
 
 </body>

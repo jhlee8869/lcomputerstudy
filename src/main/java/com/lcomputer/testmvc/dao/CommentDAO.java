@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.lcomputer.testmvc.database.DBConnection;
+import com.lcomputer.testmvc.vo.Board;
 import com.lcomputer.testmvc.vo.Comment;
 import com.lcomputer.testmvc.vo.User;
 
@@ -23,4 +24,35 @@ public class CommentDAO {
 		}
 		return dao;
 	}
+	
+	public void commentinsert(Comment comment) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = DBConnection.getConnection();
+
+			String sql = "insert into board(c_content, c_date, c_group, c_order, c_depth, u_idx) values(?, now(), ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, comment.getC_content());
+			pstmt.setInt(2, comment.getC_group());
+			pstmt.setInt(3, comment.getC_order());
+			pstmt.setInt(4, comment.getC_depth());
+			pstmt.setInt(5, comment.getUser().getU_idx());
+
+			pstmt.executeUpdate();
+
+		
+		} catch( Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }

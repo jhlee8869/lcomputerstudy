@@ -2,7 +2,7 @@ package com.lcomputer.testmvc.vo;
 
 public class Comment {
 
-	//private int rownum;
+	
 	private int c_idx;
 	private String c_content;
 	private String c_date;
@@ -13,6 +13,12 @@ public class Comment {
 	
 	public int getC_idx() {
 		return c_idx;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public void setC_idx(int c_idx) {
 		this.c_idx = c_idx;
@@ -47,11 +53,5 @@ public class Comment {
 	public void setC_depth(int c_depth) {
 		this.c_depth = c_depth;
 	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-
+	
 }

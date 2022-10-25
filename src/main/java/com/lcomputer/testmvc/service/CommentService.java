@@ -2,6 +2,7 @@ package com.lcomputer.testmvc.service;
 
 import java.util.ArrayList;
 import com.lcomputer.testmvc.dao.CommentDAO;
+import com.lcomputer.testmvc.vo.Board;
 import com.lcomputer.testmvc.vo.Comment;
 
 public class CommentService {
@@ -18,6 +19,10 @@ public class CommentService {
 			dao = CommentDAO.getInstance();
 		}
 		return service;
+	}
+	
+	public void commentinsert(Comment comment) {
+		dao.commentinsert(comment);
 	}
 
 }
