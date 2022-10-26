@@ -14,14 +14,7 @@ public class Board {
 	//private int b_count;
 	//private int u_idx;
 	private User user;
-	private Comment comment;
 
-	public Comment getComment() {
-		return comment;
-	}
-	public void setComment(Comment comment) {
-		this.comment = comment;
-	}
 	public int getB_idx() {
 		return b_idx;
 	}

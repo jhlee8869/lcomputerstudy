@@ -9,17 +9,20 @@ public class Comment {
 	private int c_group;
 	private int c_order;
 	private int c_depth;
-	private User user;
-	
+	private Board board;
+
+	public Board getBoard() {
+		return board;
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+
 	public int getC_idx() {
 		return c_idx;
 	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+	
 	public void setC_idx(int c_idx) {
 		this.c_idx = c_idx;
 	}

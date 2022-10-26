@@ -257,6 +257,7 @@ public class controller extends HttpServlet {
 				view = "board/board-insert-result";
 				
 				break;
+				
 			// 상세 화면					
 			case "/board-detail.do":
 				session = request.getSession();
@@ -273,7 +274,9 @@ public class controller extends HttpServlet {
 						
 				view = "board/board-detail";
 				request.setAttribute("board", board3);
+				
 				break;
+				
 			// 수정 화면					
 			case "/board-edit.do":
 				session = request.getSession();
@@ -362,25 +365,20 @@ public class controller extends HttpServlet {
 			//댓글 화면	
 			case "/comment-list.do":
 				
-				Comment comment = new Comment();
+				Comment comment1 = new Comment();
+				/*
+				board = new Board();
+				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				
-				session = request.getSession();
-				user = (User)session.getAttribute("user");
-				comment = (Comment)session.getAttribute("comment");
-				
-				//boardviewcount = boardService.getBoardviewcount();
-				Board board7 = new Board();
-				board7.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				board7.setUser(user);
-				board7.setComment(comment);
-				
-				boardService = BoardService.getInstance();
+				comment1.setC_content(request.getParameter("c_content"));
+				comment1.setBoard(board);
+				*/
 				commentService = CommentService.getInstance();
-				//board7 = commentService.commentinsert(board7);
+				commentService.commentinsert(comment1);
 				
 				view = "comment/comment-list";
 				
-				request.setAttribute("board", board7);
+				request.setAttribute("comment", comment1);
 				
 				break;
 				
@@ -388,10 +386,10 @@ public class controller extends HttpServlet {
 
 				session = request.getSession();
 				user = (User)session.getAttribute("user");
-				comment = (Comment)session.getAttribute("comment");
+				//comment = (Comment)session.getAttribute("comment");
 				
 				Board board8 = new Board();
-				board8.setComment(comment);
+				//board8.setComment(comment);
 				board8.setUser(user);
 				
 				boardService = BoardService.getInstance();

@@ -41,6 +41,10 @@
 		width:500px;height:100px;
 		text-align:left;
 	}
+	
+	.p_comment_write {
+		text-align:center;
+	}
 
 	.p_line:after {
   		content: "";
@@ -134,15 +138,13 @@
 	}
 	
 	#div_body3 {
-		margin:70px auto;
+		margin:80px auto;
 		width:400px;height:30px;
 		float:left;
 	}
 	
 	#div_bd3 {
 		width:20%;height:25px;
-		background-color:#66B2FF;
-		border-radius:10px;
 		float:left;
 		text-align:center;
 		font-size:17px;font-family:굴림;
@@ -150,6 +152,15 @@
 	}
 	
 	.div_bd_comment {
+		margin-top:auto;
+		margin-left:3%;
+		
+	}
+	
+	.div_bd_comment_list {
+		margin-bottom:25px;
+		background-color:#66B2FF;
+		border-radius:10px;
 		margin-left:3%;
 		
 	}
@@ -166,10 +177,6 @@
 	<input type="hidden" name="b_group" value="${board.b_group}">
 	<input type="hidden" name="b_order" value="${board.b_order}">
 	<input type="hidden" name="b_depth" value="${board.b_depth}">
-	
-	<input type="hidden" name="c_group" value="${board.comment.c_group}">
-	<input type="hidden" name="c_order" value="${board.comment.c_order}">
-	<input type="hidden" name="c_depth" value="${board.comment.c_depth}">
 		
 		<div class="div_body">
 			<div class="div_title">
@@ -209,17 +216,22 @@
 			</div>
 	</div>
 		
-	<form action="comment-list.do" name="board" method="post">
-	<input type="hidden" name="b_idx" value="${board.b_idx}">
+	<form action="board-detail.do" name="comment" method="post">
+	<input type="hidden" name="b_idx" value="${comment.board.b_idx}">
 		<div id="div_body2">
 			<p class=p_comment> <input class=input_inp1 type="text" name="c_content" value="" placeholder="댓글을 입력해주세요."></p>
 
 		</div>
 		<div id="div_body3">
-			<div class="div_bd_comment">	
-				<p class="p_reply"><input type="submit" value="댓글달기"></p>
+			<div id="div_bd3" class="div_bd_comment">		
+				<p class="p_comment_write"><input type="submit" value="댓글달기"></p>
+			</div>
+			
+			<div id="div_bd3" class="div_bd_comment_list">	
+				<a href="board-detail.do?b_idx=${board.b_idx}">목록보기</a>
 			</div>
 		</div>
+		
 	</form>
 	</div>
 

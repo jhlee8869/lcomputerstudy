@@ -32,14 +32,14 @@ public class CommentDAO {
 		try {
 			conn = DBConnection.getConnection();
 
-			String sql = "insert into board(c_content, c_date, c_group, c_order, c_depth, u_idx) values(?, now(), ?, ?, ?, ?)";
+			String sql = "insert into board(c_content, c_date, c_group, c_order, c_depth, b_idx) values(?, now(), ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, comment.getC_content());
 			pstmt.setInt(2, comment.getC_group());
 			pstmt.setInt(3, comment.getC_order());
 			pstmt.setInt(4, comment.getC_depth());
-			pstmt.setInt(5, comment.getUser().getU_idx());
-
+			pstmt.setInt(5, comment.getBoard().getB_idx());
+			
 			pstmt.executeUpdate();
 
 		
