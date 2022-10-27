@@ -1,7 +1,7 @@
 package com.lcomputer.testmvc.vo;
 
-import com.lcomputer.testmvc.service.UserService;
-import com.lcomputer.testmvc.service.BoardService;
+//import com.lcomputer.testmvc.service.UserService;
+//import com.lcomputer.testmvc.service.BoardService;
 
 public class Pagination {
 	int count;       // user테이블에 등록 된 총 user 수

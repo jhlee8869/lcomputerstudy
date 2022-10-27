@@ -172,6 +172,11 @@
 		
 	<!--  <form action="board-detail.do" name="board" method="post">
 	-->	
+	<input type="hidden" name="b_idx" value="${board.b_idx}">
+	<input type="hidden" name="u_idx" value="${board.user.u_idx}">
+	<input type="hidden" name="b_group" value="${board.b_group}">
+	<input type="hidden" name="b_order" value="${board.b_order}">
+	<input type="hidden" name="b_depth" value="${board.b_depth}">
 		
 		<div class="div_body">
 			<div class="div_title">
@@ -214,7 +219,6 @@
 	<form action="comment-insert.do" name="comment" method="post">
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
 	<input type="hidden" name="c_idx" value="${comment.c_idx}">
-	
 		<div id="div_body2">
 			<p class=p_comment> <input class=input_inp1 type="text" name="c_content" value="${comment.c_content}" placeholder="댓글을 입력해주세요."></p>
 
@@ -225,7 +229,7 @@
 			</div>
 			
 			<div id="div_bd3" class="div_bd_comment_list">	
-				<a href="board-detail.do?c_idx=${comment.c_idx}">목록보기</a>
+				<a href="board-detail.do?b_idx=${board.b_idx}">목록보기</a>
 			</div>
 		</div>
 		

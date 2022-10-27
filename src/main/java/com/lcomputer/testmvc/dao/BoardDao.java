@@ -168,7 +168,6 @@ public class BoardDao {
 	        	board.setB_idx(rs.getInt("b_idx"));
 	        	board.setB_title(rs.getString("b_title"));
 	        	board.setB_content(rs.getString("b_content"));
-	        	//board.setB_writer(rs.getString("b_writer"));
 	        	board.setB_date(rs.getString("b_date"));
 	        	board.setB_viewcount(rs.getInt("b_viewcount"));
 	        	board.setB_group(rs.getInt("b_group"));

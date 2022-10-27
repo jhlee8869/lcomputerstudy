@@ -9,7 +9,16 @@ public class Comment {
 	private int c_group;
 	private int c_order;
 	private int c_depth;
+	private int b_idx;
 	private Board board;
+	
+	public int getB_idx() {
+		return b_idx;
+	}
+
+	public void setB_idx(int b_idx) {
+		this.b_idx = b_idx;
+	}
 
 	public Board getBoard() {
 		return board;

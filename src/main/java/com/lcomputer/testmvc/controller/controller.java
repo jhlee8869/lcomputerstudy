@@ -43,8 +43,10 @@ public class controller extends HttpServlet {
 		
 		int usercount = 0;	//추가
 		int boardcount = 0;
-		int boardviewcount = 0;
+		//int boardviewcount = 0;
 		int page = 1;	//추가
+		
+		boolean isRedirected = false;
 		response.setContentType("text/html; charset=utf-8");
 		request.setCharacterEncoding("utf-8");
 		
@@ -98,10 +100,12 @@ public class controller extends HttpServlet {
 				break;
 				
 			case "/user-login.do":
+				
 				view = "user/login";
 				break;
 				
 			case "/user-login-process.do":
+				
 				idx = request.getParameter("login_id");
 				pw = request.getParameter("login_password");
 				
@@ -110,29 +114,29 @@ public class controller extends HttpServlet {
 							
 				if(user != null) {
 					session = request.getSession();
-//					session.setAttribute("u_idx", user.getU_idx());
-//					session.setAttribute("u_id", user.getU_id());
-//					session.setAttribute("u_pw", user.getU_pw());
-//					session.setAttribute("u_name", user.getU_name());
 					session.setAttribute("user", user);
 
 					view = "user/login-result";
 				} else {
 					view = "user/login-fail";
-				}			
+				}	
+				
 				break;
 				
 			case "/logout.do":
 				session = request.getSession();
 				session.invalidate();
-				view = "user/login";
+				
+				view = "user/login";				
 				break;
 				
 			case "/access-denied.do":
+				
 				view = "user/access-denied";
 				break;
 				
 			case "/user-detail.do":
+				
 				User user2 = new User();
 				user2.setU_idx(Integer.parseInt(request.getParameter("u_idx")));
 				
@@ -141,8 +145,8 @@ public class controller extends HttpServlet {
 						
 				view = "user/detail";
 				request.setAttribute("user", user2);
-				break;
 				
+				break;				
 				
 			case "/user-edit.do":
 
@@ -171,8 +175,7 @@ public class controller extends HttpServlet {
 				userService = UserService.getInstance();
 				userService.editprocessUser(user4);
 				
-				view = "user/edit-result";
-				
+				view = "user/edit-result";				
 				request.setAttribute("user", user4);
 				
 				break;
@@ -186,15 +189,14 @@ public class controller extends HttpServlet {
 				userService = UserService.getInstance();
 				userService.deleteUser(user3);
 
-				view = "user/delete";
-				
+				view = "user/delete";				
 				request.setAttribute("user", user3);
+				
 				break;
 				
 			case "/board-home.do":
 				
-				view = "board/home";
-				
+				view = "board/home";				
 				break;
 			
 			// 게시판
@@ -240,6 +242,7 @@ public class controller extends HttpServlet {
 				break;
 				
 			case "/board-insert-process.do":
+				
 				session = request.getSession();
 				user = (User)session.getAttribute("user");
 				/*User user5 = new User();
@@ -260,25 +263,34 @@ public class controller extends HttpServlet {
 				
 			// 상세 화면					
 			case "/board-detail.do":
+				
 				session = request.getSession();
 				user = (User)session.getAttribute("user");
 				
-				//boardviewcount = boardService.getBoardviewcount();
 				Board board3 = new Board();
 				board3.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				board3.setUser(user);
 				
+				Comment comment2 = new Comment();
+				comment2.setBoard(board3);
+				
 				boardService = BoardService.getInstance();
+				commentService = CommentService.getInstance();
+				
 				boardService.getBoardviewcount(board3);
 				board3 = boardService.detailBoard(board3);
+				
+				comment2 = commentService.detailComment(comment2);
 						
 				view = "board/board-detail";
 				request.setAttribute("board", board3);
+				request.setAttribute("comment", comment2);
 				
 				break;
 				
 			// 수정 화면					
 			case "/board-edit.do":
+				
 				session = request.getSession();
 				user = (User)session.getAttribute("user");
 
@@ -294,6 +306,7 @@ public class controller extends HttpServlet {
 				request.setAttribute("board", board1);
 						
 				break;
+				
 			// 수정 동작				
 			case "/board-edit-process.do":
 				
@@ -310,6 +323,7 @@ public class controller extends HttpServlet {
 				request.setAttribute("board", board2);
 				
 				break;
+				
 			// 삭제 화면
 			case "/board-delete.do":
 				
@@ -324,6 +338,7 @@ public class controller extends HttpServlet {
 				
 				request.setAttribute("board", board4);
 				break;
+				
 			// 답글 화면
 			case "/board-reply.do":
 				
@@ -335,13 +350,13 @@ public class controller extends HttpServlet {
 				boardService = BoardService.getInstance();
 				boardService.replyUpBoard(board5);
 
-				view = "board/board-reply";
-				
+				view = "board/board-reply";				
 				request.setAttribute("board", board5);
 				
 				break;
 				
 			case "/board-reply-process.do":
+				
 				session = request.getSession();
 				user = (User)session.getAttribute("user");
 				
@@ -356,33 +371,29 @@ public class controller extends HttpServlet {
 				boardService = BoardService.getInstance();
 				boardService.replyinsertBoard(board6);
 				
-				view = "/board/board-reply-result";
-				
+				view = "/board/board-reply-result";				
 				request.setAttribute("board", board6);
 				
 				break;
 				
 			//댓글 화면	
-			case "/comment-list.do":
+			case "/comment-insert.do":
 				
 				Comment comment1 = new Comment();
-				/*
-				board = new Board();
-				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				
+				comment1.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				comment1.setC_content(request.getParameter("c_content"));
-				comment1.setBoard(board);
-				*/
+		
 				commentService = CommentService.getInstance();
 				commentService.commentinsert(comment1);
 				
-				view = "comment/comment-list";
-				
+				isRedirected = true;
+				view = "board-detail.do?b_idx=" + comment1.getB_idx();
+				//view = "comment/comment-insert";				
 				request.setAttribute("comment", comment1);
 				
 				break;
 				
-			case "/comment-list-process.do":
+			case "/comment-insert-process.do":
 
 				session = request.getSession();
 				user = (User)session.getAttribute("user");
@@ -404,8 +415,16 @@ public class controller extends HttpServlet {
 				
 		}
 		
-		RequestDispatcher rd = request.getRequestDispatcher(view+".jsp");
-		rd.forward(request, response);
+		//RequestDispatcher rd = request.getRequestDispatcher(view+".jsp");
+		//rd.forward(request, response);
+		
+		// 리다이렉트
+		if (!isRedirected) {
+			RequestDispatcher rd = request.getRequestDispatcher(view+".jsp");
+			rd.forward(request, response);
+		} else {
+			response.sendRedirect(view);
+		}
 	}
 	
 	String checkSession(HttpServletRequest request, HttpServletResponse response, String command) {
