@@ -12,6 +12,14 @@ public class Board {
 	private int b_order;
 	private int b_depth;
 	private User user;
+	private Comment comment;
+	
+	public Comment getComment() {
+		return comment;
+	}
+	public void setComment(Comment comment) {
+		this.comment = comment;
+	}
 	
 	public int getB_idx() {
 		return b_idx;

@@ -37,7 +37,7 @@
 	}
 	
 	.p_comment {
-		border:2px solid #818181;
+		border:2px solid #E0E0E0;
 		width:500px;height:100px;
 		text-align:left;
 	}
@@ -138,7 +138,8 @@
 	}
 	
 	#div_body3 {
-		margin:80px auto;
+		margin-top:70px;
+		margin-bottom:40px;
 		width:400px;height:30px;
 		float:left;
 	}
@@ -151,6 +152,23 @@
 		
 	}
 	
+	#div_bd4 {
+		width:300px;height:100%;
+		float:left;
+		text-align:center;
+		font-size:17px;font-family:굴림;
+		
+	}
+	.comment_body2 {
+		width:100%;height:25px;
+		float:left;
+		text-align:center;
+		font-size:17px;font-family:굴림;
+	}
+	.comment_body3 {
+		border:2px solid #818181;
+	}
+	
 	.div_bd_comment {
 		margin-top:auto;
 		margin-left:3%;
@@ -159,20 +177,20 @@
 	
 	.div_bd_comment_list {
 		margin-bottom:25px;
-		background-color:#66B2FF;
-		border-radius:10px;
 		margin-left:3%;
 		
+	}
+	.comment-box {
+		margin-left:1%;	
+		width:300px;height:30px;
+		text-align:left;
 	}
 	
 	
 </style>
 <body>
 <h1>자유게시글 </h1>
-		
-	<!--  <form action="board-detail.do" name="board" method="post">
-	-->	
-		
+
 		<div class="div_body">
 			<div class="div_title">
 				<p class=p_title> 제목 : ${board.b_title}</p>
@@ -213,7 +231,9 @@
 		
 	<form action="comment-insert.do" name="comment" method="post">
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
-	<input type="hidden" name="c_idx" value="${comment.c_idx}">
+	<input type="hidden" name="b_idx" value="${comment.b_idx}">
+
+	<!-- <input type="hidden" name="c_idx" value="${comment.c_idx}"> -->
 	
 		<div id="div_body2">
 			<p class=p_comment> <input class=input_inp1 type="text" name="c_content" value="${comment.c_content}" placeholder="댓글을 입력해주세요."></p>
@@ -224,10 +244,28 @@
 				<p class="p_comment_write"><input type="submit" value="댓글달기"></p>
 			</div>
 			
-			<div id="div_bd3" class="div_bd_comment_list">	
-				<a href="board-detail.do?c_idx=${comment.c_idx}">목록보기</a>
-			</div>
 		</div>
+		
+		<div id="div_bd4" class="div_bd_comment_list">
+				<c:forEach items="${commentList}" var="comment">
+					<div class="comment_body3">
+						<div class="comment-box">
+							<p>${board.user.u_name}</p>
+						</div>
+						
+						<div class="comment-box">
+							<p>${comment.c_date}</p>
+						</div>
+						
+						<div class="comment-box">
+							<p>${comment.c_content}</p>
+						</div>
+					
+					</div>					
+				</c:forEach>
+				<!-- a href="comment-list.do?b_idx=${comment.b_idx}">목록보기</a-->
+				<!-- <a href="board-detail.do?c_idx=${comment.c_idx}">목록보기</a> -->
+			</div>
 		
 	</form>
 	</div>

@@ -2,6 +2,8 @@ package com.lcomputer.testmvc.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,6 +41,8 @@ public class controller extends HttpServlet {
 		HttpSession session = null;
 		BoardService boardService = null;
 		CommentService commentService = null;
+		Comment comment = null;
+		List<Comment> commentList = null;
 		command = checkSession(request, response, command);
 		
 		int usercount = 0;	//추가
@@ -271,20 +275,20 @@ public class controller extends HttpServlet {
 				board3.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				board3.setUser(user);
 				
-				Comment comment2 = new Comment();
-				comment2.setBoard(board3);
-				
 				boardService = BoardService.getInstance();
-				commentService = CommentService.getInstance();
 				
 				boardService.getBoardviewcount(board3);
 				board3 = boardService.detailBoard(board3);
 				
-				comment2 = commentService.detailComment(comment2);
-						
+				commentService = CommentService.getInstance();
+				comment = new Comment();
+				comment.setB_idx(board3.getB_idx());
+				commentList = commentService.commentlist(comment);				
+				
 				view = "board/board-detail";
+
 				request.setAttribute("board", board3);
-				request.setAttribute("comment", comment2);
+				request.setAttribute("commentList", commentList);
 				
 				break;
 				
@@ -392,26 +396,23 @@ public class controller extends HttpServlet {
 				request.setAttribute("comment", comment1);
 				
 				break;
+			/*
+			case "/comment-list.do":
+				Comment comment2 = new Comment();
+				comment2.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				comment2.setC_content(request.getParameter("c_content"));
+		
+				commentService = CommentService.getInstance();
+				commentService.commentlist(comment2);
 				
-			case "/comment-insert-process.do":
-
-				session = request.getSession();
-				user = (User)session.getAttribute("user");
-				//comment = (Comment)session.getAttribute("comment");
-				
-				Board board8 = new Board();
-				//board8.setComment(comment);
-				board8.setUser(user);
-				
-				boardService = BoardService.getInstance();
-				//boardService.replyinsertBoard(board6);
-				
-				view = "board/board-detail";
-				//view = "/board/board-reply-result";
-				
-				request.setAttribute("board", board8);
+				isRedirected = true;
+				view = "board-detail.do?b_idx=" + comment2.getB_idx();
+				//view = "comment/comment-insert";				
+				request.setAttribute("comment", comment2);
 				
 				break;
+			*/
+
 				
 		}
 		
