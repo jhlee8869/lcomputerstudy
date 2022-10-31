@@ -386,16 +386,52 @@ public class controller extends HttpServlet {
 				Comment comment1 = new Comment();
 				comment1.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				comment1.setC_content(request.getParameter("c_content"));
+				//comment1.setC_group(Integer.parseInt(request.getParameter("c_group")));
+				//comment1.setC_order(Integer.parseInt(request.getParameter("c_order")));
+				//comment1.setC_depth(Integer.parseInt(request.getParameter("c_depth")));
 		
 				commentService = CommentService.getInstance();
 				commentService.commentinsert(comment1);
 				
 				isRedirected = true;
 				view = "board-detail.do?b_idx=" + comment1.getB_idx();
-				//view = "comment/comment-insert";				
+			
 				request.setAttribute("comment", comment1);
 				
 				break;
+				
+			case "/comment-reply-process.do":
+				
+				Comment comment2 = new Comment();
+				comment2.setC_group(Integer.parseInt(request.getParameter("c_group")));
+				comment2.setC_order(Integer.parseInt(request.getParameter("c_order")));
+				comment2.setC_depth(Integer.parseInt(request.getParameter("c_depth")));
+				
+				commentService = CommentService.getInstance();
+				commentService.replyUpComment(comment2);
+				
+				isRedirected = true;
+				view = "board-detail.do?b_idx=" + comment2.getB_idx();
+				
+				request.setAttribute("comment", comment2);
+				
+				break;
+				
+			case "/comment-delete.do":
+				
+				Comment comment3 = new Comment();
+				comment3.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				comment3.setC_idx(Integer.parseInt(request.getParameter("c_idx")));
+				
+				commentService = CommentService.getInstance();
+				commentService.deleteComment(comment3);
+
+				isRedirected = true;
+				view = "board-detail.do?b_idx=" + comment3.getB_idx();			
+				request.setAttribute("comment", comment3);
+				
+				break;
+
 			/*
 			case "/comment-list.do":
 				Comment comment2 = new Comment();

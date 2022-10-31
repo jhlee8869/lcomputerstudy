@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>게시글 상세페이지</title>
-</head>
 <style>
 	pre{
 		font-size:20px;font-color:#0a0a0a;border:2px solid black;
@@ -186,8 +185,22 @@
 		text-align:left;
 	}
 	
+	#div_commentBd {
+		width:30%;height:25px;
+		background-color:#66B2FF;
+		border-radius:10px;
+		float:left;
+		text-align:center;
+		font-size:17px;font-family:굴림;
+		
+	}
+	
 	
 </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+</head>
 <body>
 <h1>자유게시글 </h1>
 
@@ -231,7 +244,11 @@
 		
 	<form action="comment-insert.do" name="comment" method="post">
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
+	<input type="hidden" name="c_idx" value="${comment.c_idx}">
 	<input type="hidden" name="b_idx" value="${comment.b_idx}">
+	<input type="hidden" name="c_group" value="${comment.c_group}">
+	<input type="hidden" name="c_order" value="${comment.c_order}">
+	<input type="hidden" name="c_depth" value="${comment.c_depth}">
 
 	<!-- <input type="hidden" name="c_idx" value="${comment.c_idx}"> -->
 	
@@ -260,15 +277,87 @@
 						<div class="comment-box">
 							<p>${comment.c_content}</p>
 						</div>
+						
+						<div class="comment-box">
+							
+							<div id="div_commentBd" class="">
+								<a class="commentReplyForm">답변</a>
+							</div>
+							
+							<div id="div_commentBd" class="">
+								<a class="commentEditForm">수정</a>
+							</div>
+							
+							<div id="div_commentBd" class="">
+								<!--<a href="comment-delete.do?b_idx=${board.b_idx}&c_idx=${comment.c_idx}">삭제</a> -->
+								<a href="comment-delete.do?c_idx=${comment.c_idx}">삭제</a>
+							</div>
+						</div>
+						<div style="display: none;">
+
+								<textarea rows="1" cols="60"></textarea>
+								<button type="button" class="commentReply" c_group="${comment.c_group}" c_order="${comment.c_order}" c_depth="${comment.c_depth}">등록</button>
+								<button type="button">취소</button>
+
+						</div>
+						
+						<div style="display: none;">
+
+								<textarea rows="1" cols="30"></textarea>
+								<button type="button" class="commentEdit">수정</button>
+								<button type="button">취소</button>
+
+						</div>
 					
 					</div>					
 				</c:forEach>
-				<!-- a href="comment-list.do?b_idx=${comment.b_idx}">목록보기</a-->
-				<!-- <a href="board-detail.do?c_idx=${comment.c_idx}">목록보기</a> -->
 			</div>
 		
 	</form>
 	</div>
+
+	<script>
+	$(document).on('click', '.commentReplyForm', function () {
+		
+		$(this).parent().parent().next().css('display', '');
+	});
+	
+	$(document).on('click', '.commentEditForm', function () {
+		console.log('bbbbbbbbb');
+		
+		$(this).parent().parent().next().css('display', '');
+	});
+	
+	
+	$(document).on('click', '.commentReply', function () {
+		let cGroup = $(this).attr('c_group');
+		let cOrder = $(this).attr('c_order');
+		let cDepth = $(this).attr('c_depth');
+		console.log(cGroup);
+		console.log(cOrder);
+		console.log(cDepth);
+		
+		$.ajax({
+			method: "POST",
+			url: "comment-reply-process.do",
+			data: { b_idx: '${board.b_idx}', c_group: cGroup, c_order: cOrder, c_depth: cDepth}
+		})
+	   .done(function( html ) {
+	   		console.log(html);
+	   });
+		
+		$(this).parent().submit();
+	});
+	
+	
+	
+	
+	
+	$(document).on('click', '.commentEdit', function () {
+		$(this).parent().submit();
+	});
+	
+	</script>
 
 </body>
 </html>

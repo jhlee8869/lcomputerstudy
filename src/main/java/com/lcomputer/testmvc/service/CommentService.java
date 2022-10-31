@@ -5,6 +5,7 @@ import java.util.List;
 import com.lcomputer.testmvc.dao.CommentDAO;
 import com.lcomputer.testmvc.vo.Board;
 import com.lcomputer.testmvc.vo.Comment;
+import com.lcomputer.testmvc.vo.User;
 
 public class CommentService {
 	private static CommentService service = null;
@@ -28,6 +29,14 @@ public class CommentService {
 	
 	public List<Comment> commentlist(Comment comment) {
 		return dao.commentlist(comment);
+	}
+	
+	public void deleteComment(Comment comment) {
+		dao.deleteComment(comment);
+	}
+	
+	public void replyUpComment(Comment comment) {
+		dao.replyUpComment(comment);
 	}
 
 }

@@ -16,6 +16,7 @@ import com.lcomputer.testmvc.vo.Board;
 import com.lcomputer.testmvc.vo.Comment;
 //import com.lcomputer.testmvc.vo.Board;
 //import com.lcomputer.testmvc.vo.User;
+import com.lcomputer.testmvc.vo.User;
 
 public class CommentDAO {
 	private static CommentDAO dao = null;
@@ -42,9 +43,8 @@ public class CommentDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, comment.getC_content());
 			pstmt.setInt(2, comment.getC_group());
-			pstmt.setInt(3, comment.getC_order());
-			pstmt.setInt(4, comment.getC_depth());
-			//pstmt.setInt(5, comment.getBoard().getB_group());
+			pstmt.setInt(3, comment.getC_order()+1);
+			pstmt.setInt(4, comment.getC_depth()+1);
 			pstmt.setInt(5, comment.getB_idx());
 			
 			pstmt.executeUpdate();
@@ -99,6 +99,56 @@ public class CommentDAO {
 		}
 		
 		return list;
+	}
+	
+	public void replyUpComment(Comment comment) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+			
+		try {
+			conn = DBConnection.getConnection();
+			String sql = "update comment set c_order = c_order+1 where c_group = ? and c_order > ? or c_depth > ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, comment.getC_group());
+			pstmt.setInt(2, comment.getC_order());
+			pstmt.setInt(3, comment.getC_depth());
+			pstmt.executeUpdate();
+	
+			
+		} catch( Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void deleteComment(Comment comment) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+			
+		try {
+			conn = DBConnection.getConnection();
+			String sql = "delete from comment where b_idx = ?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, comment.getB_idx());
+
+			pstmt.executeUpdate();
+		} catch( Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
