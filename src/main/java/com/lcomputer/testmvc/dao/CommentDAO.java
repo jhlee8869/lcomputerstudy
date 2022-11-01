@@ -14,8 +14,6 @@ import org.apache.catalina.connector.Response;
 import com.lcomputer.testmvc.database.DBConnection;
 import com.lcomputer.testmvc.vo.Board;
 import com.lcomputer.testmvc.vo.Comment;
-//import com.lcomputer.testmvc.vo.Board;
-//import com.lcomputer.testmvc.vo.User;
 import com.lcomputer.testmvc.vo.User;
 
 public class CommentDAO {
@@ -39,14 +37,20 @@ public class CommentDAO {
 		try {
 			conn = DBConnection.getConnection();
 
-			String sql = "insert into comment(c_content, c_date, c_group, c_order, c_depth, b_idx) values(?, now(), ?, ?, ?, ?)";
+			String sql = "insert into comment(c_content, c_date, c_group, c_order, c_depth, b_idx, u_idx) values(?, now(), ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, comment.getC_content());
 			pstmt.setInt(2, comment.getC_group());
 			pstmt.setInt(3, comment.getC_order()+1);
 			pstmt.setInt(4, comment.getC_depth()+1);
 			pstmt.setInt(5, comment.getB_idx());
+			pstmt.setInt(6, comment.getUser().getU_idx());
+			pstmt.executeUpdate();
 			
+			pstmt.close();
+			
+			sql = "update comment set c_group = last_insert_id() where c_idx = last_insert_id()";
+			pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
 
 		
@@ -62,21 +66,39 @@ public class CommentDAO {
 		}
 	}
 	
-	public List<Comment> commentlist(Comment comment) {
+	public List<Comment> commentlist(Pagination pagination) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<Comment> list = new ArrayList<>();
+		//List<Comment> list = new ArrayList<>();
+		ArrayList<Comment> list = null;
+		int pageNum = pagination.getPageNum();
 			
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "select * from comment where b_idx = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, comment.getB_idx());
+			//String sql = "select * from comment where b_idx = ?";
+			//*
+			String query = "SELECT @ROWNUM := @ROWNUM - 1 AS ROWNUM,\n"
+					+ "ta.*,\n"
+					+ "tc.u_id, tc.u_pw, tc.u_name, tc.u_tel, tc.u_age\n"
+					+ "FROM comment ta\n"
+					+ "INNER JOIN (SELECT @rownum := (SELECT	COUNT(*)-?+1 FROM comment ta)) tb ON 1=1\n"
+					+ "left join user tc ON ta.u_idx = tc.u_idx\n"
+					+ "ORDER BY 	ta.c_group DESC, ta.c_order asc\n"
+					+ "LIMIT ?,?\n";
+			pstmt = conn.prepareStatement(query);
+			//*/
+			//pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pageNum);
+			pstmt.setInt(2, pageNum);
+			pstmt.setInt(3, pagination.perPage);
 			rs = pstmt.executeQuery();
+			list = new ArrayList<Comment>();
 
 	        while(rs.next()){
-	        	comment = new Comment();
+	        	//comment = new Comment();
+	        	Comment comment = new Comment();
+	        	comment.setRownum(rs.getInt("ROWNUM"));
 	        	comment.setC_idx(rs.getInt("c_idx"));
 	        	comment.setC_content(rs.getString("c_content"));
 	        	comment.setC_date(rs.getString("c_date"));
@@ -84,6 +106,16 @@ public class CommentDAO {
 	        	comment.setC_order(rs.getInt("c_order"));
 	        	comment.setC_depth(rs.getInt("c_depth"));
 	        	comment.setB_idx(rs.getInt("b_idx"));
+	        	comment.setU_idx(rs.getInt("u_idx"));
+	        	
+	        	User user = new User();
+	        	user.setU_idx(rs.getInt("u_idx"));
+		      	user.setU_id(rs.getString("u_id"));
+		      	user.setU_name(rs.getString("u_name"));
+		      	user.setU_tel(rs.getString("u_tel"));
+		      	user.setU_age(rs.getString("u_age"));
+		      	comment.setUser(user);
+		      	
 	        	list.add(comment);
 	        }
 		} catch( Exception ex) {

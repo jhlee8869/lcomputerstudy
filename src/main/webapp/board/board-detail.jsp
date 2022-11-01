@@ -245,12 +245,6 @@
 	<form action="comment-insert.do" name="comment" method="post">
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
 	<input type="hidden" name="c_idx" value="${comment.c_idx}">
-	<input type="hidden" name="b_idx" value="${comment.b_idx}">
-	<input type="hidden" name="c_group" value="${comment.c_group}">
-	<input type="hidden" name="c_order" value="${comment.c_order}">
-	<input type="hidden" name="c_depth" value="${comment.c_depth}">
-
-	<!-- <input type="hidden" name="c_idx" value="${comment.c_idx}"> -->
 	
 		<div id="div_body2">
 			<p class=p_comment> <input class=input_inp1 type="text" name="c_content" value="${comment.c_content}" placeholder="댓글을 입력해주세요."></p>
@@ -267,15 +261,15 @@
 				<c:forEach items="${commentList}" var="comment">
 					<div class="comment_body3">
 						<div class="comment-box">
-							<p>${board.user.u_name}</p>
+							<p>작성자:${board.user.u_name}</p>
 						</div>
 						
 						<div class="comment-box">
-							<p>${comment.c_date}</p>
+							<p>작성일자:${comment.c_date}</p>
 						</div>
 						
 						<div class="comment-box">
-							<p>${comment.c_content}</p>
+							<p>내용:${comment.c_content}</p>
 						</div>
 						
 						<div class="comment-box">
@@ -344,6 +338,7 @@
 		})
 	   .done(function( html ) {
 	   		console.log(html);
+	   		$('#div_bd4').html(html);
 	   });
 		
 		$(this).parent().submit();

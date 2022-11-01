@@ -4,13 +4,40 @@ public class Comment {
 
 	
 	private int c_idx;
+	private int rownum;
 	private String c_content;
 	private String c_date;
 	private int c_group;
 	private int c_order;
 	private int c_depth;
 	private int b_idx;
+	private int u_idx;
 	private Board board;
+	private User user;
+	
+	public int getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public int getU_idx() {
+		return u_idx;
+	}
+
+	public void setU_idx(int u_idx) {
+		this.u_idx = u_idx;
+	}
 	
 	public int getB_idx() {
 		return b_idx;

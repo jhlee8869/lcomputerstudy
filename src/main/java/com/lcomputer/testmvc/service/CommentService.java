@@ -1,11 +1,13 @@
 package com.lcomputer.testmvc.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.lcomputer.testmvc.dao.CommentDAO;
 import com.lcomputer.testmvc.vo.Board;
 import com.lcomputer.testmvc.vo.Comment;
 import com.lcomputer.testmvc.vo.User;
+import com.lcomputer.testmvc.vo.Pagination;
 
 public class CommentService {
 	private static CommentService service = null;
@@ -27,8 +29,12 @@ public class CommentService {
 		dao.commentinsert(comment);
 	}
 	
-	public List<Comment> commentlist(Comment comment) {
-		return dao.commentlist(comment);
+	public ArrayList<Comment> commentlist(Pagination pagination) {
+		return dao.commentlist(pagination);
+	}
+	
+	public ArrayList<Board> getBoards(Pagination pagination) {
+		return dao.getBoards(pagination);
 	}
 	
 	public void deleteComment(Comment comment) {

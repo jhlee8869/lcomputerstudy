@@ -383,12 +383,13 @@ public class controller extends HttpServlet {
 			//댓글 화면	
 			case "/comment-insert.do":
 				
+				session = request.getSession();
+				user = (User)session.getAttribute("user");
+				
 				Comment comment1 = new Comment();
 				comment1.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				comment1.setC_content(request.getParameter("c_content"));
-				//comment1.setC_group(Integer.parseInt(request.getParameter("c_group")));
-				//comment1.setC_order(Integer.parseInt(request.getParameter("c_order")));
-				//comment1.setC_depth(Integer.parseInt(request.getParameter("c_depth")));
+				comment1.setUser(user);
 		
 				commentService = CommentService.getInstance();
 				commentService.commentinsert(comment1);
@@ -403,20 +404,23 @@ public class controller extends HttpServlet {
 			case "/comment-reply-process.do":
 				
 				Comment comment2 = new Comment();
+				comment2.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				comment2.setC_group(Integer.parseInt(request.getParameter("c_group")));
 				comment2.setC_order(Integer.parseInt(request.getParameter("c_order")));
 				comment2.setC_depth(Integer.parseInt(request.getParameter("c_depth")));
 				
+				
 				commentService = CommentService.getInstance();
 				commentService.replyUpComment(comment2);
+				commentList = commentService.commentlist(comment2);
 				
-				isRedirected = true;
-				view = "board-detail.do?b_idx=" + comment2.getB_idx();
+				view = "comment/aj-comment-list";
 				
 				request.setAttribute("comment", comment2);
+				request.setAttribute("commentList", commentList);
 				
 				break;
-				
+			/*	
 			case "/comment-delete.do":
 				
 				Comment comment3 = new Comment();
@@ -431,7 +435,8 @@ public class controller extends HttpServlet {
 				request.setAttribute("comment", comment3);
 				
 				break;
-
+			 */
+				
 			/*
 			case "/comment-list.do":
 				Comment comment2 = new Comment();
