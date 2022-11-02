@@ -82,6 +82,12 @@
 		width:400px;height:30px;
 		float:left;
 	}
+	#div_body_all2 {
+		margin:10px auto;
+		margin-top:70px;
+		width:400px;height:30px;
+		float:left;
+	}
 	
 	#div_body1 {
 		margin:10px auto;
@@ -203,8 +209,9 @@
 </head>
 <body>
 <h1>자유게시글 </h1>
-
-		<div class="div_body">
+	<input type="hidden" name="b_idx" value="${board.b_idx}">
+		<div class="div_body">	
+		
 			<div class="div_title">
 				<p class=p_title> 제목 : ${board.b_title}</p>
 			</div>
@@ -221,6 +228,7 @@
 			<div class="div_content">
 				<p class=p_content> 내용 : ${board.b_content}</p>
 			</div>
+			
 		</div>
 		
 	<div id="div_body_all">
@@ -240,28 +248,31 @@
 			<div id="div_bd2" class="div_bd_list">
 				<a href="board-list.do">목록보기</a>
 			</div>
+		</div>
 	</div>
-		
+
+<div id="div_body_all2">
 	<form action="comment-insert.do" name="comment" method="post">
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
-	<input type="hidden" name="c_idx" value="${comment.c_idx}">
+
 	
 		<div id="div_body2">
 			<p class=p_comment> <input class=input_inp1 type="text" name="c_content" value="${comment.c_content}" placeholder="댓글을 입력해주세요."></p>
 
 		</div>
+		
 		<div id="div_body3">
 			<div id="div_bd3" class="div_bd_comment">		
 				<p class="p_comment_write"><input type="submit" value="댓글달기"></p>
 			</div>
-			
 		</div>
-		
+
 		<div id="div_bd4" class="div_bd_comment_list">
+				
 				<c:forEach items="${commentList}" var="comment">
 					<div class="comment_body3">
 						<div class="comment-box">
-							<p>작성자:${board.user.u_name}</p>
+							<p>작성자:${comment.user.u_name}</p>
 						</div>
 						
 						<div class="comment-box">
@@ -309,7 +320,6 @@
 		
 	</form>
 	</div>
-
 	<script>
 	$(document).on('click', '.commentReplyForm', function () {
 		

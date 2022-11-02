@@ -32,11 +32,11 @@ public class CommentService {
 	public ArrayList<Comment> commentlist(Pagination pagination) {
 		return dao.commentlist(pagination);
 	}
-	
+	/*
 	public ArrayList<Board> getBoards(Pagination pagination) {
 		return dao.getBoards(pagination);
 	}
-	
+	*/
 	public void deleteComment(Comment comment) {
 		dao.deleteComment(comment);
 	}

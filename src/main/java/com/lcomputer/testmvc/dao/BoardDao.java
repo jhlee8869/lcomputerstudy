@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.lcomputer.testmvc.database.DBConnection;
 import com.lcomputer.testmvc.vo.Board;
+import com.lcomputer.testmvc.vo.Comment;
 import com.lcomputer.testmvc.vo.Pagination;
 import com.lcomputer.testmvc.vo.User;
 
@@ -156,15 +157,23 @@ public class BoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+	
 			
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "select * from board where b_idx = ?";
+			
+			//String sql = "select * from board where b_idx = ?";
+			String sql = "select * from board ta\n"
+					+ "LEFT JOIN user tb ON ta.u_idx = tb.u_idx\n"
+					+ "where ta.b_idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, board.getB_idx());
+
 			rs = pstmt.executeQuery();
 
-	        while(rs.next()){     
+	        while(rs.next()){
+	        	
+	        	//board.setRownum(rs.getInt("ROWNUM"));
 	        	board.setB_idx(rs.getInt("b_idx"));
 	        	board.setB_title(rs.getString("b_title"));
 	        	board.setB_content(rs.getString("b_content"));
@@ -173,7 +182,17 @@ public class BoardDao {
 	        	board.setB_group(rs.getInt("b_group"));
 	        	board.setB_order(rs.getInt("b_order"));
 	        	board.setB_depth(rs.getInt("b_depth"));
-	        	board.getUser().getU_idx();
+	        	board.setU_idx(rs.getInt("u_idx"));
+	        	
+	        	User user = new User();
+	        	user.setU_id(rs.getString("u_id"));
+	        	user.setU_pw(rs.getString("u_pw"));
+	        	user.setU_name(rs.getString("u_name"));
+	        	user.setU_tel(rs.getString("u_tel"));
+	        	user.setU_age(rs.getString("u_age"));
+	        	board.setUser(user);
+	        	
+	        	
 	        }
 		} catch( Exception ex) {
 			ex.printStackTrace();

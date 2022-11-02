@@ -13,7 +13,14 @@ public class Board {
 	private int b_depth;
 	private User user;
 	private Comment comment;
+	private int u_idx;
 	
+	public int getU_idx() {
+		return u_idx;
+	}
+	public void setU_idx(int u_idx) {
+		this.u_idx = u_idx;
+	}
 	public Comment getComment() {
 		return comment;
 	}

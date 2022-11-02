@@ -15,6 +15,7 @@ import com.lcomputer.testmvc.database.DBConnection;
 import com.lcomputer.testmvc.vo.Board;
 import com.lcomputer.testmvc.vo.Comment;
 import com.lcomputer.testmvc.vo.User;
+import com.lcomputer.testmvc.vo.Pagination;
 
 public class CommentDAO {
 	private static CommentDAO dao = null;
@@ -66,11 +67,12 @@ public class CommentDAO {
 		}
 	}
 	
-	public List<Comment> commentlist(Pagination pagination) {
+	public ArrayList<Comment> commentlist(Pagination pagination) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		//List<Comment> list = new ArrayList<>();
+		int b_idx = 458;
 		ArrayList<Comment> list = null;
 		int pageNum = pagination.getPageNum();
 			
@@ -84,14 +86,16 @@ public class CommentDAO {
 					+ "FROM comment ta\n"
 					+ "INNER JOIN (SELECT @rownum := (SELECT	COUNT(*)-?+1 FROM comment ta)) tb ON 1=1\n"
 					+ "left join user tc ON ta.u_idx = tc.u_idx\n"
+					+ "where ta.b_idx = ?\n"
 					+ "ORDER BY 	ta.c_group DESC, ta.c_order asc\n"
 					+ "LIMIT ?,?\n";
 			pstmt = conn.prepareStatement(query);
 			//*/
 			//pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, pageNum);
-			pstmt.setInt(2, pageNum);
-			pstmt.setInt(3, pagination.perPage);
+			pstmt.setInt(2, b_idx);
+			pstmt.setInt(3, pageNum);
+			pstmt.setInt(4, pagination.perPage);
 			rs = pstmt.executeQuery();
 			list = new ArrayList<Comment>();
 

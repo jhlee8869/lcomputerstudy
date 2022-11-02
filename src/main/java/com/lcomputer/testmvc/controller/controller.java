@@ -42,7 +42,9 @@ public class controller extends HttpServlet {
 		BoardService boardService = null;
 		CommentService commentService = null;
 		Comment comment = null;
-		List<Comment> commentList = null;
+		//List<Comment> commentList = null;
+		ArrayList<Board> boardList = null;
+		ArrayList<Comment> commentList = null;
 		command = checkSession(request, response, command);
 		
 		int usercount = 0;	//추가
@@ -268,14 +270,14 @@ public class controller extends HttpServlet {
 			// 상세 화면					
 			case "/board-detail.do":
 				
-				session = request.getSession();
-				user = (User)session.getAttribute("user");
+				//session = request.getSession();
+				//user = (User)session.getAttribute("user");
 				
 				Board board3 = new Board();
 				board3.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				board3.setUser(user);
 				
 				boardService = BoardService.getInstance();
+				Pagination pagination3 = new Pagination();
 				
 				boardService.getBoardviewcount(board3);
 				board3 = boardService.detailBoard(board3);
@@ -283,12 +285,15 @@ public class controller extends HttpServlet {
 				commentService = CommentService.getInstance();
 				comment = new Comment();
 				comment.setB_idx(board3.getB_idx());
-				commentList = commentService.commentlist(comment);				
+				//commentList = commentService.commentlist(comment);
+				
+				commentList = commentService.commentlist(pagination3);
 				
 				view = "board/board-detail";
 
 				request.setAttribute("board", board3);
 				request.setAttribute("commentList", commentList);
+				//request.setAttribute("commentList", commentList);
 				
 				break;
 				
@@ -387,6 +392,7 @@ public class controller extends HttpServlet {
 				user = (User)session.getAttribute("user");
 				
 				Comment comment1 = new Comment();
+				//comment1.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				comment1.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				comment1.setC_content(request.getParameter("c_content"));
 				comment1.setUser(user);
@@ -412,12 +418,16 @@ public class controller extends HttpServlet {
 				
 				commentService = CommentService.getInstance();
 				commentService.replyUpComment(comment2);
-				commentList = commentService.commentlist(comment2);
+				//commentList = commentService.commentlist(comment2);
+				Pagination pagination4 = new Pagination();
+				//ArrayList<Comment> list4 = commentService.commentlist(pagination4);
+				commentList = commentService.commentlist(pagination4);
 				
 				view = "comment/aj-comment-list";
 				
 				request.setAttribute("comment", comment2);
 				request.setAttribute("commentList", commentList);
+				//request.setAttribute("commentList", commentList);
 				
 				break;
 			/*	
