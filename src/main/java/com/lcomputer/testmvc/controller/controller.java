@@ -287,7 +287,7 @@ public class controller extends HttpServlet {
 				comment.setB_idx(board3.getB_idx());
 				//commentList = commentService.commentlist(comment);
 				
-				commentList = commentService.commentlist(pagination3);
+				commentList = commentService.getComment(pagination3, board3);
 				
 				view = "board/board-detail";
 
@@ -386,22 +386,23 @@ public class controller extends HttpServlet {
 				break;
 				
 			//댓글 화면	
-			case "/comment-insert.do":
-				
-				session = request.getSession();
-				user = (User)session.getAttribute("user");
+			case "/comment-reply.do":
 				
 				Comment comment1 = new Comment();
+				comment1.setC_group(Integer.parseInt(request.getParameter("c_group")));
+				comment1.setC_order(Integer.parseInt(request.getParameter("c_order")));
+				comment1.setC_depth(Integer.parseInt(request.getParameter("c_depth")));
 				//comment1.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				comment1.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				comment1.setC_content(request.getParameter("c_content"));
-				comment1.setUser(user);
+				//comment1.setC_content(request.getParameter("c_content"));
+				//comment1.setUser(user);
 		
 				commentService = CommentService.getInstance();
-				commentService.commentinsert(comment1);
+				commentService.replyUpComment(comment1);
 				
-				isRedirected = true;
-				view = "board-detail.do?b_idx=" + comment1.getB_idx();
+				
+				view = "comment/aj-comment-list";
+				//isRedirected = true;
+				//view = "board-detail.do?b_idx=" + comment1.getB_idx();
 			
 				request.setAttribute("comment", comment1);
 				
@@ -409,27 +410,41 @@ public class controller extends HttpServlet {
 				
 			case "/comment-reply-process.do":
 				
+				session = request.getSession();
+				user = (User)session.getAttribute("user");
+				
 				Comment comment2 = new Comment();
+				comment2.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				comment2.setC_content(request.getParameter("c_content"));
 				comment2.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				comment2.setC_group(Integer.parseInt(request.getParameter("c_group")));
 				comment2.setC_order(Integer.parseInt(request.getParameter("c_order")));
 				comment2.setC_depth(Integer.parseInt(request.getParameter("c_depth")));
 				
+				comment2.setUser(user);
+				Board board10 = new Board();
+				//board10.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				Pagination pagination4 = new Pagination();
+				
+				board10.setB_idx(comment2.getB_idx());
 				
 				commentService = CommentService.getInstance();
-				commentService.replyUpComment(comment2);
+				commentService.replyinsertComment(comment2);
+				
 				//commentList = commentService.commentlist(comment2);
-				Pagination pagination4 = new Pagination();
+			
 				//ArrayList<Comment> list4 = commentService.commentlist(pagination4);
-				commentList = commentService.commentlist(pagination4);
+				commentList = commentService.getComment(pagination4, board10);
 				
-				view = "comment/aj-comment-list";
+				//view = "comment/aj-comment-list";
+				view = "board-detail.do?b_idx=" + comment2.getB_idx();
 				
-				request.setAttribute("comment", comment2);
+				//request.setAttribute("comment", comment2);
 				request.setAttribute("commentList", commentList);
 				//request.setAttribute("commentList", commentList);
 				
 				break;
+				
 			/*	
 			case "/comment-delete.do":
 				

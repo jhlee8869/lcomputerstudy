@@ -41,7 +41,7 @@
 		
 		<div style="display: none;">
 
-				<textarea rows="1" cols="30"></textarea>
+				<textarea rows="1" cols="60"></textarea>
 				<button type="button" class="commentEdit">수정</button>
 				<button type="button">취소</button>
 

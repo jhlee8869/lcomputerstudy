@@ -252,7 +252,7 @@
 	</div>
 
 <div id="div_body_all2">
-	<form action="comment-insert.do" name="comment" method="post">
+	<form action="comment-reply.do" name="comment" method="post">
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
 
 	
@@ -308,7 +308,7 @@
 						
 						<div style="display: none;">
 
-								<textarea rows="1" cols="30"></textarea>
+								<textarea rows="1" cols="60"></textarea>
 								<button type="button" class="commentEdit">수정</button>
 								<button type="button">취소</button>
 
@@ -327,9 +327,8 @@
 	});
 	
 	$(document).on('click', '.commentEditForm', function () {
-		console.log('bbbbbbbbb');
 		
-		$(this).parent().parent().next().css('display', '');
+		$(this).parent().parent().next().next().css('display', '');
 	});
 	
 	
@@ -343,7 +342,7 @@
 		
 		$.ajax({
 			method: "POST",
-			url: "comment-reply-process.do",
+			url: "comment-up-process.do",
 			data: { b_idx: '${board.b_idx}', c_group: cGroup, c_order: cOrder, c_depth: cDepth}
 		})
 	   .done(function( html ) {

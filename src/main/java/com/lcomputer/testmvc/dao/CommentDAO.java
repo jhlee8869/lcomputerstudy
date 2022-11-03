@@ -9,6 +9,8 @@ import java.util.ArrayList;
 //import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+
 import org.apache.catalina.connector.Response;
 
 import com.lcomputer.testmvc.database.DBConnection;
@@ -31,7 +33,7 @@ public class CommentDAO {
 		return dao;
 	}
 	
-	public void commentinsert(Comment comment) {
+	public void insertComment(Comment comment) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -42,8 +44,8 @@ public class CommentDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, comment.getC_content());
 			pstmt.setInt(2, comment.getC_group());
-			pstmt.setInt(3, comment.getC_order()+1);
-			pstmt.setInt(4, comment.getC_depth()+1);
+			pstmt.setInt(3, comment.getC_order());
+			pstmt.setInt(4, comment.getC_depth());
 			pstmt.setInt(5, comment.getB_idx());
 			pstmt.setInt(6, comment.getUser().getU_idx());
 			pstmt.executeUpdate();
@@ -67,13 +69,14 @@ public class CommentDAO {
 		}
 	}
 	
-	public ArrayList<Comment> commentlist(Pagination pagination) {
+	public ArrayList<Comment> getComment(Pagination pagination, Board board) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		//List<Comment> list = new ArrayList<>();
-		int b_idx = 458;
-		ArrayList<Comment> list = null;
+		//int b_idx = 0;
+		//ArrayList<Comment> list = null;
+		ArrayList<Comment> list = new ArrayList<Comment>();
 		int pageNum = pagination.getPageNum();
 			
 		try {
@@ -93,11 +96,11 @@ public class CommentDAO {
 			//*/
 			//pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, pageNum);
-			pstmt.setInt(2, b_idx);
+			pstmt.setInt(2, board.getB_idx());
 			pstmt.setInt(3, pageNum);
-			pstmt.setInt(4, pagination.perPage);
+			pstmt.setInt(4, Pagination.perPage);
 			rs = pstmt.executeQuery();
-			list = new ArrayList<Comment>();
+			//list = new ArrayList<Comment>();
 
 	        while(rs.next()){
 	        	//comment = new Comment();
@@ -135,6 +138,36 @@ public class CommentDAO {
 		}
 		
 		return list;
+	}
+	
+	public void replyinsertComment(Comment comment) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			
+			String sql = "insert into comment(c_content, c_date, c_group, c_order, c_depth, b_idx, u_idx) values(?, now(), ?, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, comment.getC_content());
+			pstmt.setInt(2, comment.getC_group());
+			pstmt.setInt(3, comment.getC_order()+1);
+			pstmt.setInt(4, comment.getC_depth()+1);
+			pstmt.setInt(5, comment.getB_idx());
+			pstmt.setInt(6, comment.getUser().getU_idx());
+			pstmt.executeUpdate();
+			
+		
+		} catch( Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void replyUpComment(Comment comment) {
