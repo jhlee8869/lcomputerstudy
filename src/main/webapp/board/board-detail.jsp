@@ -252,9 +252,9 @@
 	</div>
 
 <div id="div_body_all2">
-	<form action="comment-reply.do" name="comment" method="post">
+	<form action="comment-insert.do" name="comment" method="post">
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
-
+	<input type="hidden" name="c_idx" value="${comment.c_idx}">
 	
 		<div id="div_body2">
 			<p class=p_comment> <input class=input_inp1 type="text" name="c_content" value="${comment.c_content}" placeholder="댓글을 입력해주세요."></p>
@@ -295,7 +295,7 @@
 							
 							<div id="div_commentBd" class="">
 								<!--<a href="comment-delete.do?b_idx=${board.b_idx}&c_idx=${comment.c_idx}">삭제</a> -->
-								<a href="comment-delete.do?c_idx=${comment.c_idx}">삭제</a>
+								<a href="comment-delete.do?b_idx=${comment.b_idx}&c_group=${comment.c_group}">삭제</a>
 							</div>
 						</div>
 						<div style="display: none;">
@@ -309,7 +309,7 @@
 						<div style="display: none;">
 
 								<textarea rows="1" cols="60"></textarea>
-								<button type="button" class="commentEdit">수정</button>
+								<button type="button" class="commentEdit" c_group="${comment.c_group}" c_content="${comment.c_content}">수정</button>
 								<button type="button">취소</button>
 
 						</div>
@@ -332,7 +332,9 @@
 	});
 	
 	
-	$(document).on('click', '.commentReply', function () {
+	
+	$(document).on('click', '.p_comment_write', function () {
+		let cContent = $(this).attr('c_content');
 		let cGroup = $(this).attr('c_group');
 		let cOrder = $(this).attr('c_order');
 		let cDepth = $(this).attr('c_depth');
@@ -342,8 +344,8 @@
 		
 		$.ajax({
 			method: "POST",
-			url: "comment-up-process.do",
-			data: { b_idx: '${board.b_idx}', c_group: cGroup, c_order: cOrder, c_depth: cDepth}
+			url: "comment-insert-process.do",
+			data: { b_idx: '${board.b_idx}', c_content: cContent, c_group: cGroup, c_order: cOrder, c_depth: cDepth}
 		})
 	   .done(function( html ) {
 	   		console.log(html);
@@ -355,12 +357,24 @@
 	
 	
 	
-	
-	
+	<!--
 	$(document).on('click', '.commentEdit', function () {
+		let cGroup = $(this).attr('c_group');
+		let cContent = $(this).attr('c_content');
+		console.log(cGroup);
+		
+		$.ajax({
+			method: "POST",
+			url: "comment-edit.do",
+			data: { b_idx: '${board.b_idx}', c_group: cGroup, c_content: cContent}
+		})
+	   .done(function( html ) {
+	   		console.log(html);
+	   		$('#div_bd4').html(html);
+	   });
 		$(this).parent().submit();
 	});
-	
+	-->
 	</script>
 
 </body>

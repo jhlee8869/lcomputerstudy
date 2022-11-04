@@ -48,5 +48,9 @@ public class CommentService {
 	public void replyUpComment(Comment comment) {
 		dao.replyUpComment(comment);
 	}
+	
+	public void editComment(Comment comment) {
+		dao.editComment(comment);
+	}
 
 }

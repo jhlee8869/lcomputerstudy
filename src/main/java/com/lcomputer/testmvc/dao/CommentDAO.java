@@ -202,10 +202,36 @@ public class CommentDAO {
 			
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "delete from comment where b_idx = ?";
+			String sql = "delete from comment where b_idx = ? and c_group = ?";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comment.getB_idx());
+			pstmt.setInt(2, comment.getC_group());
+
+			pstmt.executeUpdate();
+		} catch( Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void editComment(Comment comment) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+			
+		try {
+			conn = DBConnection.getConnection();
+			String sql = "update comment set c_content = ? where b_idx = ? and c_group = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, comment.getC_content());
+			pstmt.setInt(2, comment.getB_idx());
+			pstmt.setInt(3, comment.getC_group());
 
 			pstmt.executeUpdate();
 		} catch( Exception ex) {
