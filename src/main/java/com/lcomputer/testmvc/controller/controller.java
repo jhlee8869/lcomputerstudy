@@ -283,8 +283,10 @@ public class controller extends HttpServlet {
 				board3 = boardService.detailBoard(board3);
 				
 				commentService = CommentService.getInstance();
-				comment = new Comment();
-				comment.setB_idx(board3.getB_idx());
+				Comment comment1 = new Comment();
+				//comment = new Comment();
+				comment1.setB_idx(board3.getB_idx());
+				//comment1.setC_idx(Integer.parseInt(request.getParameter("c_idx")));
 				//commentList = commentService.commentlist(comment);
 				
 				commentList = commentService.getComment(pagination3, board3);
@@ -292,6 +294,7 @@ public class controller extends HttpServlet {
 				view = "board/board-detail";
 
 				request.setAttribute("board", board3);
+				//request.setAttribute("comment", comment1);
 				request.setAttribute("commentList", commentList);
 				//request.setAttribute("commentList", commentList);
 				
@@ -386,72 +389,103 @@ public class controller extends HttpServlet {
 				break;
 				
 				
-			//댓글 화면	
-			case "/comment-insert.do":
-				
-				Comment comment1 = new Comment();
-				comment1.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				
-			
-				isRedirected = true;
-				view = "board-detail.do?b_idx=" + comment1.getB_idx();
-			
-				request.setAttribute("comment", comment1);
-				
-				break;
-				
-				
-				//댓글 생성	
+			//댓글 생성	
 			case "/comment-insert-process.do":
 				
 				session = request.getSession();
 				user = (User)session.getAttribute("user");
 				
-				Comment comment2 = new Comment();
+				Comment comment3 = new Comment();
 				
-				comment2.setC_content(request.getParameter("c_content"));
-				comment2.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-
-				comment2.setUser(user);
+				comment3.setC_content(request.getParameter("c_content"));
+				comment3.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				 
+				comment3.setUser(user);
 				
 				commentService = CommentService.getInstance();
-				commentService.insertComment(comment2);
+				commentService.insertComment(comment3);
 				
-				view = "comment/aj-comment-list";
-
-				request.setAttribute("comment", comment2);
+				isRedirected = true;
+				view = "board-detail.do?b_idx=" + comment3.getB_idx();
+			
+				request.setAttribute("comment", comment3);
 				
 				break;
+			/*
+			case "/comment-list-process.do":
+				
+				session = request.getSession();
+				user = (User)session.getAttribute("user");
+				///
+				Board board8 = new Board();
+				board8.setB_idx(Integer.parseInt(request.getParameter("b_idx")));				
+				boardService = BoardService.getInstance();
+				board8 = boardService.detailBoard(board8);
+				////
+				Comment comment4 = new Comment();
+				
+				comment4.setC_content(request.getParameter("c_content"));
+				comment4.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				 
+				comment4.setUser(user);
+				
+				commentService = CommentService.getInstance();
+				commentService.insertComment(comment4);
+				///
+				Pagination pagination4 = new Pagination();
+				
+				commentList = commentService.getComment(pagination4, board8);
+				////
+				view = "comment/aj-comment-list2";
+				
+				request.setAttribute("comment", comment4);
+				//request.setAttribute("board", board8);
+				//request.setAttribute("commentList", commentList);
+				
+				break;
+				*/
+				
 				// 댓글 삭제
 			case "/comment-delete.do":
 				
-				Comment comment3 = new Comment();
-				comment3.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				comment3.setC_group(Integer.parseInt(request.getParameter("c_group")));
+				Comment comment5 = new Comment();
+				comment5.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				comment5.setC_group(Integer.parseInt(request.getParameter("c_group")));
 				
 				commentService = CommentService.getInstance();
-				commentService.deleteComment(comment3);
+				commentService.deleteComment(comment5);
 
 				isRedirected = true;
-				view = "board-detail.do?b_idx=" + comment3.getB_idx();			
-				request.setAttribute("comment", comment3);
+				view = "board-detail.do?b_idx=" + comment5.getB_idx();			
+				request.setAttribute("comment", comment5);
 				
 				break;
 				
 				// 댓글 수정
 			case "/comment-edit.do":
 				
-				Comment comment4 = new Comment();
+				Comment comment6 = new Comment();
 				
-				//comment4.setC_content(request.getParameter("c_content"));
-				comment4.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				comment4.setC_group(Integer.parseInt(request.getParameter("c_group")));
+				comment6.setC_content(request.getParameter("c_content"));
+				comment6.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				comment6.setC_group(Integer.parseInt(request.getParameter("c_group")));
+				
+				//comment6.setUser(user);
 				
 				commentService = CommentService.getInstance();
-				commentService.editComment(comment4);
+				commentService.editComment(comment6);
 				
-				view = "comment/aj-comment-list";
-				request.setAttribute("comment", comment4);
+				Board board8 = new Board();
+				board8.setB_idx(Integer.parseInt(request.getParameter("b_idx")));				
+				boardService = BoardService.getInstance();
+
+				Pagination pagination4 = new Pagination();
+				
+				commentList = commentService.getComment(pagination4, board8);
+				
+				view = "comment/aj-comment-list3";
+				request.setAttribute("comment", comment6);
+				request.setAttribute("commentList", commentList);
 				
 				break;
 				

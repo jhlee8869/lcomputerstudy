@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>게시글 상세페이지</title>
+
 <style>
 	pre{
 		font-size:20px;font-color:#0a0a0a;border:2px solid black;
@@ -201,14 +197,12 @@
 		
 	}
 	
-	
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-</head>
-<body>
 <h1>자유게시글 </h1>
+
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
 		<div class="div_body">	
 		
@@ -319,6 +313,7 @@
 		
 	</form>
 	</div>
+	
 	<script>
 	$(document).on('click', '.commentReplyForm', function () {
 		
@@ -332,7 +327,7 @@
 	
 	
 	
-	$(document).on('click', '.commentReply', function () {
+	$(document).on('click', '.p_comment_write', function () {
 		let cContent = $(this).attr('c_content');
 		let cGroup = $(this).attr('c_group');
 		let cOrder = $(this).attr('c_order');
@@ -343,8 +338,7 @@
 		
 		$.ajax({
 			method: "POST",
-			<!-- url: "comment-insert-process.do", -->
-			url: "comment-list-process.do",
+			url: "comment-insert-process.do",
 			data: { b_idx: '${board.b_idx}', c_content: cContent, c_group: cGroup, c_order: cOrder, c_depth: cDepth}
 		})
 	   .done(function( html ) {
@@ -355,6 +349,9 @@
 		$(this).parent().submit();
 	});
 	
+	
+	
+	<!--
 	$(document).on('click', '.commentEdit', function () {
 		let cGroup = $(this).attr('c_group');
 		let cContent = $(this).attr('c_content');
@@ -363,7 +360,7 @@
 		$.ajax({
 			method: "POST",
 			url: "comment-edit.do",
-			data: { b_idx: '${board.b_idx}', c_content: cContent, c_group: cGroup}
+			data: { b_idx: '${board.b_idx}', c_group: cGroup, c_content: cContent}
 		})
 	   .done(function( html ) {
 	   		console.log(html);
@@ -373,6 +370,3 @@
 	});
 	-->
 	</script>
-
-</body>
-</html>

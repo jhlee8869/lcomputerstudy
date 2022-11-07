@@ -62,15 +62,17 @@ public class Comment {
 	public void setC_idx(int c_idx) {
 		this.c_idx = c_idx;
 	}
-	public String getC_content() {
-		return c_content;
-	}
-	public void setC_content(String c_content) {
-		this.c_content = c_content;
-	}
 	public String getC_date() {
 		return c_date;
 	}
+	public String getC_content() {
+		return c_content;
+	}
+
+	public void setC_content(String c_content) {
+		this.c_content = c_content;
+	}
+
 	public void setC_date(String c_date) {
 		this.c_date = c_date;
 	}
