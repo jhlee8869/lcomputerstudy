@@ -224,26 +224,13 @@ public class CommentDAO {
 	public void editComment(Comment comment) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 			
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "select * from comment where b_idx = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, comment.getB_idx());
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()){     	        	
-	        	comment.setC_content(rs.getString("c_content"));
-	        }
-
-			pstmt.close();
-			
-			sql = "update comment set c_content = ? where b_idx = ? and c_group = ?";
+			String sql = "update comment set c_content = ? where c_idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, comment.getC_content());
-			pstmt.setInt(2, comment.getB_idx());
-			pstmt.setInt(3, comment.getC_group());
+			pstmt.setInt(2, comment.getC_idx());
 
 			pstmt.executeUpdate();
 			

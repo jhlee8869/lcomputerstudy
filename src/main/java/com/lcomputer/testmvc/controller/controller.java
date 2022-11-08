@@ -41,9 +41,9 @@ public class controller extends HttpServlet {
 		HttpSession session = null;
 		BoardService boardService = null;
 		CommentService commentService = null;
-		Comment comment = null;
+		//Comment comment = null;
 		//List<Comment> commentList = null;
-		ArrayList<Board> boardList = null;
+		//ArrayList<Board> boardList = null;
 		ArrayList<Comment> commentList = null;
 		command = checkSession(request, response, command);
 		
@@ -405,10 +405,19 @@ public class controller extends HttpServlet {
 				commentService = CommentService.getInstance();
 				commentService.insertComment(comment3);
 				
+				/*
+				Pagination pagination34 = new Pagination();
+				Board board34 = new Board();
+				
+				commentList = commentService.getComment(pagination34, board34);
+				*/
 				isRedirected = true;
 				view = "board-detail.do?b_idx=" + comment3.getB_idx();
+				//view = "comment/aj-comment-list4";
 			
 				request.setAttribute("comment", comment3);
+				//request.setAttribute("commentList", commentList);
+		
 				
 				break;
 			/*
@@ -463,18 +472,21 @@ public class controller extends HttpServlet {
 				
 				// 댓글 수정
 			case "/comment-edit.do":
+				session = request.getSession();
+				user = (User)session.getAttribute("user");
 				
 				Comment comment6 = new Comment();
 				
+				comment6.setC_idx(Integer.parseInt(request.getParameter("c_idx")));
 				comment6.setC_content(request.getParameter("c_content"));
-				comment6.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				comment6.setC_group(Integer.parseInt(request.getParameter("c_group")));
+				comment6.setC_date(request.getParameter("c_date"));
 				
-				//comment6.setUser(user);
+				comment6.setUser(user);
 				
 				commentService = CommentService.getInstance();
 				commentService.editComment(comment6);
 				
+				/*
 				Board board8 = new Board();
 				board8.setB_idx(Integer.parseInt(request.getParameter("b_idx")));				
 				boardService = BoardService.getInstance();
@@ -482,10 +494,10 @@ public class controller extends HttpServlet {
 				Pagination pagination4 = new Pagination();
 				
 				commentList = commentService.getComment(pagination4, board8);
-				
+				*/
 				view = "comment/aj-comment-list3";
 				request.setAttribute("comment", comment6);
-				request.setAttribute("commentList", commentList);
+				//request.setAttribute("commentList", commentList);
 				
 				break;
 				
