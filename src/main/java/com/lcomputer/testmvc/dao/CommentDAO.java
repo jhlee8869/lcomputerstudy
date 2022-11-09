@@ -202,11 +202,13 @@ public class CommentDAO {
 			
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "delete from comment where b_idx = ? and c_group = ?";
+			String sql = "delete from comment where b_idx = ? and c_group = ? and c_order = ? and c_depth = ?";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, comment.getB_idx());
 			pstmt.setInt(2, comment.getC_group());
+			pstmt.setInt(3, comment.getC_order());
+			pstmt.setInt(4, comment.getC_depth());
 
 			pstmt.executeUpdate();
 		} catch( Exception ex) {

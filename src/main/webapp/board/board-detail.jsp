@@ -252,45 +252,47 @@
 			<div class="div_content">
 				<p class=p_content> 내용 : ${board.b_content}</p>
 			</div>
-			
 		</div>
 		
-	<div id="div_body_all">
-		<div id="div_body1">
-			<div id="div_bd" class="div_bd_edit">
-				<a href="board-edit.do?b_idx=${board.b_idx}">수정</a>
-			</div>
-			<div id="div_bd" class="div_bd_delete">
-				<a href="board-delete.do?b_idx=${board.b_idx}">삭제</a>
-			</div>
-			<div id="div_bd" class="div_bd_insert">
-				<a href="board-insert.do?b_idx=${board.b_idx}">글쓰기</a>
-			</div>
-			<div id="div_bd2" class="div_bd_reply">
-				<a href="board-reply.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">답글달기</a>
-			</div>
-			<div id="div_bd2" class="div_bd_list">
-				<a href="board-list.do">목록보기</a>
+		<div id="div_body_all">
+			<div id="div_body1">
+				<div id="div_bd" class="div_bd_edit">
+					<a href="board-edit.do?b_idx=${board.b_idx}">수정</a>
+				</div>
+				<div id="div_bd" class="div_bd_delete">
+					<a href="board-delete.do?b_idx=${board.b_idx}">삭제</a>
+				</div>
+				<div id="div_bd" class="div_bd_insert">
+					<a href="board-insert.do?b_idx=${board.b_idx}">글쓰기</a>
+				</div>
+				<div id="div_bd2" class="div_bd_reply">
+					<a href="board-reply.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">답글달기</a>
+				</div>
+				<div id="div_bd2" class="div_bd_list">
+					<a href="board-list.do">목록보기</a>
+				</div>
 			</div>
 		</div>
-	</div>
 
-<div id="div_body_all2">
-	<form action="comment-insert-process.do" name="comment" method="post">
-	<input type="hidden" name="b_idx" value="${board.b_idx}">
-	<input type="hidden" name="c_idx" value="${comment.c_idx}">
+	<div id="div_body_all2">
+		<form action="comment-insert-process.do" name="comment" method="post">
+		<input type="hidden" name="b_idx" value="${board.b_idx}">
+		<input type="hidden" name="c_idx" value="${comment.c_idx}">
+		<input type="hidden" name="c_group" value="${comment.c_group}">
+		<input type="hidden" name="c_order" value="${comment.c_order}">
+		<input type="hidden" name="c_depth" value="${comment.c_depth}">
 
-		<div id="div_body2">
-			<p class=p_comment> <input class=input_inp1 type="text" name="c_content" value="${comment.c_content}" placeholder="댓글을 입력해주세요."></p>
-		</div>
+			<div id="div_body2">
+				<p class=p_comment> <input class=input_inp1 type="text" name="c_content" value="${comment.c_content}" placeholder="댓글을 입력해주세요."></p>
+			</div>
 		
-		<div id="div_body3">
-			<div id="div_bd3" class="div_bd_comment">		
-				<p class="p_comment_write"><input type="submit" value="댓글달기"></p>
+			<div id="div_body3">
+				<div id="div_bd3" class="div_bd_comment">		
+					<p class="p_comment_write"><input type="submit" value="댓글달기"></p>
+				</div>
 			</div>
-		</div>
 
-		<div id="div_bd4" class="div_bd_comment_list">
+			<div id="div_bd4" class="div_bd_comment_list">
 				
 				<c:forEach items="${commentList}" var="comment">
 					<div id="div_bd5" class="comment_body3">
@@ -318,15 +320,16 @@
 							
 							<div id="div_commentBd3" class="">
 								<!--<a href="comment-delete.do?b_idx=${board.b_idx}&c_idx=${comment.c_idx}">삭제</a> -->
-								<a href="comment-delete.do?b_idx=${comment.b_idx}&c_group=${comment.c_group}">삭제</a>
+								<a href="comment-delete.do?b_idx=${comment.b_idx}&c_group=${comment.c_group}&c_order=${comment.c_order}&c_depth=${comment.c_depth}">삭제</a>
 							</div>
 						</div>
+						
 						<div style="display: none;">
 
 								<textarea rows="1" cols="60"></textarea>
 								<button type="button" class="commentReply" c_group="${comment.c_group}" c_order="${comment.c_order}" c_depth="${comment.c_depth}">등록</button>
 								<button type="button">취소</button>
-
+								
 						</div>
 						
 						<div style="display: none;">
@@ -337,12 +340,13 @@
 
 						</div>
 					
-					</div>					
+					</div>
 				</c:forEach>
 			</div>
 		
-	</form>
+		</form>
 	</div>
+	
 	<script>
 	$(document).on('click', '.commentReplyForm', function () {
 		
@@ -355,7 +359,8 @@
 	});	
 	
 	$(document).on('click', '.commentReply', function () {
-		let cContent = $(this).attr('c_content');
+		let cIdx = $(this).attr('c_idx');
+		let cContent = $(this).prev().val();
 		let cGroup = $(this).attr('c_group');
 		let cOrder = $(this).attr('c_order');
 		let cDepth = $(this).attr('c_depth');
@@ -366,8 +371,8 @@
 		$.ajax({
 			method: "POST",
 			<!-- url: "comment-insert-process.do", -->
-			url: "comment-list-process.do",
-			data: { c_idx: '${comment.c_idx}', c_content: cContent, c_group: cGroup, c_order: cOrder, c_depth: cDepth}
+			url: "comment-reply-process.do",
+			data: { b_idx: '${board.b_idx}', c_idx: cIdx, c_content: cContent, c_group: cGroup, c_order: cOrder, c_depth: cDepth}
 		})
 	   .done(function( html ) {
 	   		console.log(html);
@@ -385,11 +390,11 @@
 		$.ajax({
 			method: "POST",
 			url: "comment-edit.do",
-			data: { c_idx: cIdx, c_content: cContent}
+			data: { b_idx: '${board.b_idx}', c_idx: cIdx, c_content: cContent}
 		})
 	   .done(function( html ) {
 	   		console.log(html);
-	   		$('#div_bd5').html(html);
+	   		$('#div_bd4').html(html);
 	   });
 		$(this).parent().submit();
 	});
