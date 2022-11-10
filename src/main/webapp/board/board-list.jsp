@@ -69,9 +69,7 @@
 	}
 	
 	.div_board-search-combo1 {
-		width:30%;height:25px;
-		background-color:#66B2FF;
-		border-radius:10px;
+		width:25%;height:25px;
 		float:left;
 		text-align:center;
 		font-size:17px;font-family:굴림;
@@ -79,28 +77,28 @@
 	}
 	
 	.div_board-search-input1 {
-		width:60%;height:25px;
+		width:50%;height:25px;
 		float:left;
 		text-align:center;
 		font-size:17px;font-family:굴림;
-		
 	}
 	
 	.div_board-search-button1 {
-		width:10%;height:25px;
-		background-color:#66B2FF;
-		border-radius:10px;
+		width:15%;height:25px;
 		float:left;
 		text-align:center;
 		font-size:17px;font-family:굴림;
-		
 	}
 	
 	.p_inputbox1 {
 		border:2px solid #818181;
-		width:97%;height:90%;
-		text-align:left;
-		
+		width:90%;height:90%;
+		text-align:center;
+	}
+	
+	.input-search {
+		width:90%;height:90%;
+		text-align:center;
 	}
 	
 		
@@ -168,17 +166,25 @@
 	</div>
 	
 	<div class="div_board-searchBady">
-		<div class="div_board-search-combo1">
-			<a> 콤보박스 </a>
-		</div>
+		<form action="" name="board" method="get">
+			<div class="div_board-search-combo1">
+				<select name=search>
+					<option value="none"> === 선택 === </option>
+					<option value="title"> 제목 </option>
+					<option value="content"> 내용 </option>
+					<option value="write"> 작성자 </option>
+					<option value="title_content"> 제목 + 내용 </option>
+				</select>
+			</div>
 		
-		<div class="div_board-search-input1">
-			<input class="p_inputbox1" type="text" name="" value="">
-		</div>
+			<div class="div_board-search-input1">
+				<input class="p_inputbox1" type="text" name="" value="">
+			</div>
 		
-		<div class="div_board-search-button1">
-			<a> 검색 </a>
-		</div>
+			<div class="div_board-search-button1">
+				<input class=input-search type="submit" value="검색">
+			</div>
+		</form>
 	</div>
 	
 	<table>

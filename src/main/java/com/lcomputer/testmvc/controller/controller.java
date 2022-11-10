@@ -16,6 +16,7 @@ import com.lcomputer.testmvc.service.BoardService;
 import com.lcomputer.testmvc.service.CommentService;
 import com.lcomputer.testmvc.service.UserService;
 import com.lcomputer.testmvc.vo.Pagination;
+import com.lcomputer.testmvc.vo.Search;
 import com.lcomputer.testmvc.vo.User;
 import com.lcomputer.testmvc.vo.Board;
 import com.lcomputer.testmvc.vo.Comment;
@@ -232,8 +233,9 @@ public class controller extends HttpServlet {
 				pagination2.setCount(boardcount);
 				//pagination2.setCount(boardviewcount);
 				pagination2.init();
+				Search search2 = new Search();
 				
-				ArrayList<Board> list2 = boardService.getBoards(pagination2);
+				ArrayList<Board> list2 = boardService.getBoards(pagination2, search2);
 				request.setAttribute("list", list2);
 				request.setAttribute("pagination", pagination2);	//추가
 				

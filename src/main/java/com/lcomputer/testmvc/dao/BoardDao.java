@@ -10,6 +10,7 @@ import com.lcomputer.testmvc.database.DBConnection;
 import com.lcomputer.testmvc.vo.Board;
 import com.lcomputer.testmvc.vo.Comment;
 import com.lcomputer.testmvc.vo.Pagination;
+import com.lcomputer.testmvc.vo.Search;
 import com.lcomputer.testmvc.vo.User;
 
 public class BoardDao {
@@ -231,7 +232,7 @@ public class BoardDao {
 		}
 	}
 	
-	public ArrayList<Board> getBoards(Pagination pagination) {
+	public ArrayList<Board> getBoards(Pagination pagination, Search search) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

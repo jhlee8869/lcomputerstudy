@@ -3,6 +3,7 @@ package com.lcomputer.testmvc.service;
 import java.util.ArrayList;
 import com.lcomputer.testmvc.dao.BoardDao;
 import com.lcomputer.testmvc.vo.Pagination;
+import com.lcomputer.testmvc.vo.Search;
 import com.lcomputer.testmvc.vo.Board;
 
 public class BoardService {
@@ -35,8 +36,8 @@ public class BoardService {
 		dao.insertBoard(board);
 	}
 	
-	public ArrayList<Board> getBoards(Pagination pagination) {
-		return dao.getBoards(pagination);
+	public ArrayList<Board> getBoards(Pagination pagination, Search search) {
+		return dao.getBoards(pagination, search);
 	}
 	
 	public Board editBoard(Board board) {
