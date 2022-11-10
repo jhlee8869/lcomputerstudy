@@ -237,7 +237,7 @@ public class controller extends HttpServlet {
 				request.setAttribute("list", list2);
 				request.setAttribute("pagination", pagination2);	//추가
 				
-				view = "board/board";
+				view = "board/board-list";
 				
 				break;
 
@@ -401,7 +401,6 @@ public class controller extends HttpServlet {
 				
 				commentService = CommentService.getInstance();
 				commentService.insertComment(comment3);
-				//commentService.replyUpComment(comment3);
 				
 				isRedirected = true;
 				view = "board-detail.do?b_idx=" + comment3.getB_idx();
@@ -454,39 +453,8 @@ public class controller extends HttpServlet {
 				request.setAttribute("commentList", commentList);
 				
 				break;
-				
-				
-				//댓글 답변 화면	
-			case "/comment-reply.do":
-				
-				session = request.getSession();
-				user = (User)session.getAttribute("user");
-				
-				Comment comment7 = new Comment();
-				
-				comment7.setC_group(Integer.parseInt(request.getParameter("c_group")));
-				comment7.setC_order(Integer.parseInt(request.getParameter("c_order")));
-				comment7.setC_depth(Integer.parseInt(request.getParameter("c_depth")));
-				//comment7.setUser(user);
-		
-				commentService = CommentService.getInstance();
-				commentService.replyUpComment(comment7);
-				
-				Pagination pagination74 = new Pagination();
-				
-				Board board78 = new Board();
-				//board78.setB_idx(Integer.parseInt(request.getParameter("b_idx")));				
-				boardService = BoardService.getInstance();
-				
-				commentList = commentService.getComment(pagination74, board78);
-				
-				
-				view = "comment/aj-commentReply-list";
-				//view = "comment/aj-comment-reply";
-				request.setAttribute("commentList", commentList);
-				
-				break;
-				
+			
+				//댓글 답변 화면
 			case "/comment-reply-process.do":
 				
 				session = request.getSession();
@@ -502,7 +470,6 @@ public class controller extends HttpServlet {
 		
 				commentService = CommentService.getInstance();
 				commentService.replyinsertComment(comment8);
-				//commentService.replyUpComment(comment7);
 				
 				Pagination pagination84 = new Pagination();
 				

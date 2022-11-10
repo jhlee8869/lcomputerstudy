@@ -26,11 +26,6 @@
 		width:500px;
 		text-align:center;
 	}
-	a {
-		text-decoration:none;
-		color:#000;
-		font-weight:700;
-	}
 	
 	// 추가
 	ul {
@@ -53,6 +48,61 @@
 		height: 60px;
 	}
 	
+	.div_board-pagination {
+		margin:10px auto;
+		text-align: center;
+		
+	}
+	
+	.board-listapply {
+		text-decoration:none;
+		color:#000;
+		font-weight:700;
+	}
+	
+	.div_board-searchBady {
+		margin:10px auto;
+		margin-right:50px;
+		width:600px;height:30px;
+		float:right;
+		
+	}
+	
+	.div_board-search-combo1 {
+		width:30%;height:25px;
+		background-color:#66B2FF;
+		border-radius:10px;
+		float:left;
+		text-align:center;
+		font-size:17px;font-family:굴림;
+		
+	}
+	
+	.div_board-search-input1 {
+		width:60%;height:25px;
+		float:left;
+		text-align:center;
+		font-size:17px;font-family:굴림;
+		
+	}
+	
+	.div_board-search-button1 {
+		width:10%;height:25px;
+		background-color:#66B2FF;
+		border-radius:10px;
+		float:left;
+		text-align:center;
+		font-size:17px;font-family:굴림;
+		
+	}
+	
+	.p_inputbox1 {
+		border:2px solid #818181;
+		width:97%;height:90%;
+		text-align:left;
+		
+	}
+	
 		
 </style>
 <body>
@@ -72,20 +122,20 @@
 			 	
 		<c:forEach items="${list}" var="board" varStatus="status">
 			 <tr>
-			 	<td><a href="board-detail.do?b_idx=${board.b_idx}">${board.rownum}</a></td>
+			 	<td><a class=board-listapply href="board-detail.do?b_idx=${board.b_idx}">${board.rownum}</a></td>
 			 	<td>${board.user.u_name}</td>
-			 	<td><a href="board-detail.do?b_idx=${board.b_idx}">${board.b_title}</a></td>
+			 	<td><a class=board-listapply href="board-detail.do?b_idx=${board.b_idx}">${board.b_title}</a></td>
 				<td>${board.b_date}</td>
 				<td>${board.b_viewcount}</td>
 		     <tr>
 		</c:forEach>	
 	</table>
-	<div>
+	<div class=div_board-pagination>
 		<ul>
 			 <c:choose>
 				<c:when test="${ pagination.startPage > 1}">
 					<li style="">
-						<a href="board-list.do?page=${pagination.prevPage}">◀</a>
+						<a class=board-listapply href="board-list.do?page=${pagination.prevPage}">◀</a>
 					</li>
 				</c:when>
 			</c:choose>
@@ -101,7 +151,7 @@
 						</c:when>
 						<c:when test="${ pagination.page ne i }">
 							<li>
-								<a href="board-list.do?page=${i}">${i}</a>
+								<a class=board-listapply href="board-list.do?page=${i}">${i}</a>
 							</li>
 						</c:when>
 					</c:choose>
@@ -110,12 +160,27 @@
 			 <c:choose>
 				<c:when test="${ pagination.nextPage le pagination.lastPage }">
 					<li style="">
-						<a href="board-list.do?page=${pagination.nextPage}">▶</a>
+						<a class=board-listapply href="board-list.do?page=${pagination.nextPage}">▶</a>
 					</li>
 				</c:when>
 			</c:choose> 
 		</ul>
 	</div>
+	
+	<div class="div_board-searchBady">
+		<div class="div_board-search-combo1">
+			<a> 콤보박스 </a>
+		</div>
+		
+		<div class="div_board-search-input1">
+			<input class="p_inputbox1" type="text" name="" value="">
+		</div>
+		
+		<div class="div_board-search-button1">
+			<a> 검색 </a>
+		</div>
+	</div>
+	
 	<table>
 		<tr>
 			<td style=border:1pxsolid#818181;width:70px;text-align:center;>

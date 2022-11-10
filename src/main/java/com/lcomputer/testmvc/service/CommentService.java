@@ -44,11 +44,11 @@ public class CommentService {
 	public void replyinsertComment(Comment comment) {
 		dao.replyinsertComment(comment);
 	}
-	
+	/*
 	public void replyUpComment(Comment comment) {
 		dao.replyUpComment(comment);
 	}
-	
+	*/
 	public void editComment(Comment comment) {
 		dao.editComment(comment);
 	}

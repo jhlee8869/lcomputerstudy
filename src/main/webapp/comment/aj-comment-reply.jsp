@@ -52,7 +52,7 @@
 					
 					</div>
 				</c:forEach>
-				
+	<!--			
 				<script>
 	$(document).on('click', '.commentReplyForm', function () {
 		
@@ -71,7 +71,6 @@
 		
 		$.ajax({
 			method: "POST",
-			<!-- url: "comment-insert-process.do", -->
 			url: "comment-reply.do",
 			data: { b_idx: '${board.b_idx}', c_idx: cIdx, c_content: cContent, c_group: cGroup, c_order: cOrder, c_depth: cDepth}
 		})
@@ -83,3 +82,4 @@
 		$(this).parent().submit();
 	});
 </script>
+ -->
