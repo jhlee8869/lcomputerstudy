@@ -217,8 +217,39 @@ public class controller extends HttpServlet {
 				break;
 				*/
 				
+			// 게시판 목록
 			case "/board-list.do":
 
+				String reqPage2 = request.getParameter("page");
+				
+				if (reqPage2 != null)
+					page = Integer.parseInt(reqPage2);
+				
+				Board board31 = new Board();
+				board31.setB_title(request.getParameter("b_content"));
+				boardService = BoardService.getInstance();
+				boardcount = boardService.getBoardCount();
+				
+				Pagination pagination2 = new Pagination();
+				pagination2.setPage(page);
+				pagination2.setCount(boardcount);
+				pagination2.init();
+				Search search2 = new Search();
+				search2.setSearchWord(request.getParameter("selSearch"));
+				
+				
+				ArrayList<Board> list2 = boardService.getBoards(pagination2, board31, search2);
+				request.setAttribute("list", list2);
+				request.setAttribute("pagination", pagination2);	//추가
+				request.setAttribute("board", board31);
+				request.setAttribute("search", search2);
+				
+				view = "board/board-list";
+				
+				break;
+				
+			case "/board-search.do":
+				/*
 				String reqPage2 = request.getParameter("page");
 				
 				if (reqPage2 != null)
@@ -238,11 +269,12 @@ public class controller extends HttpServlet {
 				ArrayList<Board> list2 = boardService.getBoards(pagination2, search2);
 				request.setAttribute("list", list2);
 				request.setAttribute("pagination", pagination2);	//추가
-				
-				view = "board/board-list";
+				*/
+				//view = "board/board-list";
 				
 				break;
-
+				
+				
 			case "/board-insert.do":
 				
 				view = "board/board-insert";

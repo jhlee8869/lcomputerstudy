@@ -36,8 +36,8 @@ public class BoardService {
 		dao.insertBoard(board);
 	}
 	
-	public ArrayList<Board> getBoards(Pagination pagination, Search search) {
-		return dao.getBoards(pagination, search);
+	public ArrayList<Board> getBoards(Pagination pagination, Board board, Search search) {
+		return dao.getBoards(pagination, board, search);
 	}
 	
 	public Board editBoard(Board board) {

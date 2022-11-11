@@ -232,7 +232,7 @@ public class BoardDao {
 		}
 	}
 	
-	public ArrayList<Board> getBoards(Pagination pagination, Search search) {
+	public ArrayList<Board> getBoards(Pagination pagination, Board board, Search search) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -248,18 +248,34 @@ public class BoardDao {
 					+ "FROM board ta\n"
 					+ "INNER JOIN (SELECT @rownum := (SELECT	COUNT(*)-?+1 FROM board ta)) tb ON 1=1\n"
 					+ "left join user tc ON ta.u_idx = tc.u_idx\n"
+					//+ "where ta.? = ?\n"
 					+ "ORDER BY 	ta.b_group DESC, ta.b_order asc\n"
 					+ "LIMIT ?,?\n";
+
 	       	pstmt = conn.prepareStatement(query);
 	       	pstmt.setInt(1, pageNum);
+	       	//pstmt.setString(2, board.getB_content());
+	    	//pstmt.setString(3, "1");
+	    	//pstmt.setInt(4, pageNum);
+	    	//pstmt.setInt(5, Pagination.perPage);
 	    	pstmt.setInt(2, pageNum);
-	    	//pstmt.setInt(2, pageNum);
 	    	pstmt.setInt(3, Pagination.perPage);
+	    	
 	        rs = pstmt.executeQuery();
 	        list = new ArrayList<Board>();
 		        
-		     while(rs.next()){     
-		      	Board board = new Board();
+		     while(rs.next()){
+		    	Board board1 = new Board();
+			    board1.setRownum(rs.getInt("ROWNUM"));
+			    board1.setB_idx(rs.getInt("b_idx"));
+			    board1.setB_title(rs.getString("b_title"));
+			    board1.setB_content(rs.getString("b_content"));
+			    board1.setB_date(rs.getString("b_date"));
+			    board1.setB_viewcount(rs.getInt("b_viewcount"));
+			    board1.setB_group(rs.getInt("b_group"));
+			    board1.setB_order(rs.getInt("b_order"));
+			    board1.setB_depth(rs.getInt("b_depth"));
+		      	/*
 		      	board.setRownum(rs.getInt("ROWNUM"));
 		      	board.setB_idx(rs.getInt("b_idx"));
 		      	board.setB_title(rs.getString("b_title"));
@@ -269,17 +285,22 @@ public class BoardDao {
 		      	board.setB_group(rs.getInt("b_group"));
 		      	board.setB_order(rs.getInt("b_order"));
 		      	board.setB_depth(rs.getInt("b_depth"));
-		      	
+		      	*/
 		      	User user = new User();	        	
 		      	user.setU_idx(rs.getInt("u_idx"));
 		      	user.setU_id(rs.getString("u_id"));
 		      	user.setU_name(rs.getString("u_name"));
 		      	user.setU_tel(rs.getString("u_tel"));
 		      	user.setU_age(rs.getString("u_age"));
-		      	
+		      	/*
 	        	board.setUser(user);
 	           	
 	           	list.add(board);
+	           	*/
+	        	board1.setUser(user);
+	           	
+	           	list.add(board1);
+		      	
 	        }
 		} catch (Exception e) {
 			e.printStackTrace();

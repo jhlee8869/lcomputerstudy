@@ -164,11 +164,11 @@
 			</c:choose> 
 		</ul>
 	</div>
-	
+
 	<div class="div_board-searchBady">
-		<form action="" name="board" method="get">
+		<form action="board-list.do" name="board" method="get">
 			<div class="div_board-search-combo1">
-				<select name=search>
+				<select name=selSearch id=selSearch>
 					<option value="none"> === 선택 === </option>
 					<option value="title"> 제목 </option>
 					<option value="content"> 내용 </option>
@@ -178,7 +178,7 @@
 			</div>
 		
 			<div class="div_board-search-input1">
-				<input class="p_inputbox1" type="text" name="" value="">
+				<input class="p_inputbox1" type="text" name=inpSearch id=inpSearch value="" placeholder="검색어를 입력하세요.">
 			</div>
 		
 			<div class="div_board-search-button1">

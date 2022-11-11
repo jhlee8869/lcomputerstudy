@@ -21,6 +21,18 @@ public class Search extends Pagination {
 		
 	}
 	
+	public void init2() {
+		/*
+		pageNum = (page-1)*perPage;
+		startPage =((page-1)/pageUnit)*pageUnit+1;
+		lastPage = (int)Math.ceil(count / (float)perPage);
+		endPage = startPage+pageUnit-1;
+		endPage = endPage < lastPage ? endPage : lastPage;
+		prevPage=(startPage-pageUnit);
+		nextPage=(startPage+pageUnit);
+		*/
+	}
+	
 	public String getSearchWord() {
 		return searchWord;
 	}
