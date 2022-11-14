@@ -2,7 +2,7 @@ package com.lcomputer.testmvc.vo;
 
 public class Search extends Pagination {
 	
-	private String searchWord;
+	private String searchName;
 	private String searchType;
 	private String searchCategory;
 	/*
@@ -20,7 +20,7 @@ public class Search extends Pagination {
 	public Search() {
 		
 	}
-	
+
 	public void init2() {
 		/*
 		pageNum = (page-1)*perPage;
@@ -32,13 +32,13 @@ public class Search extends Pagination {
 		nextPage=(startPage+pageUnit);
 		*/
 	}
-	
-	public String getSearchWord() {
-		return searchWord;
+
+	public String getSearchName() {
+		return searchName;
 	}
 
-	public void setSearchWord(String searchWord) {
-		this.searchWord = searchWord;
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
 	}
 
 	public String getSearchType() {

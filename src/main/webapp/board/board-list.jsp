@@ -101,6 +101,33 @@
 		text-align:center;
 	}
 	
+	.div_board-button {
+		margin:20px auto;
+		margin-top:50px;
+		width:600px;height:30px;
+		text-align:center;
+		
+	}
+	
+	.div_board-button-two {
+		margin:10px auto;
+		width:200px;height:30px;
+		text-align:center;
+		
+	}
+	
+	.a_board-button1 {
+		width:40%;height:25px;
+		float:left;
+		text-align:center;
+	}
+	
+	.a_board-button2 {
+		width:40%;height:25px;
+		float:right;
+		text-align:center;
+	}
+
 		
 </style>
 <body>
@@ -168,7 +195,7 @@
 	<div class="div_board-searchBady">
 		<form action="board-list.do" name="board" method="get">
 			<div class="div_board-search-combo1">
-				<select name=selSearch id=selSearch>
+				<select name=searchType id=searchType>
 					<option value="none"> === 선택 === </option>
 					<option value="title"> 제목 </option>
 					<option value="content"> 내용 </option>
@@ -178,28 +205,23 @@
 			</div>
 		
 			<div class="div_board-search-input1">
-				<input class="p_inputbox1" type="text" name=inpSearch id=inpSearch value="" placeholder="검색어를 입력하세요.">
+				<input class="p_inputbox1" type="text" name=searchName id=searchName value="" placeholder="검색어를 입력하세요.">
 			</div>
 		
 			<div class="div_board-search-button1">
 				<input class=input-search type="submit" value="검색">
 			</div>
 		</form>
+		
 	</div>
 	
-	<table>
-		<tr>
-			<td style=border:1pxsolid#818181;width:70px;text-align:center;>
-				<a href="board-insert.do">글쓰기</a>
-			</td>
-		</tr>
-	</table>
-	<table style=float:left;>
-		<tr>
-			<td style=border:1pxsolid#818181;width:70px;text-align:center;>
-				<a href="board-home.do">돌아가기</a>
-			</td>
-		</tr>
-	</table>
+	<div class="div_board-button"> 
+		<div class="div_board-button-two">
+			<a class="a_board-button1" href="board-insert.do">글쓰기</a>
+
+			<a class="a_board-button2" href="board-home.do">돌아가기</a>
+		</div>
+	</div>
+
 </body>
 </html>

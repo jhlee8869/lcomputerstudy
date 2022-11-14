@@ -239,6 +239,24 @@ public class BoardDao {
 		ArrayList<Board> list = null;
 		int pageNum = pagination.getPageNum();
 		
+		String where = "";
+		
+		switch (search.getSearchType() != null ? search.getSearchType(): "NULL") {
+			case "null":
+				where += "and 1=1 ";
+				break;
+			
+			case "title":
+				where += "and b_title like ? ";
+				break;
+			case "content":
+				where += "and b_content like ? ";
+				break;
+			case "write":
+				where += "and u_name like ? ";
+				break;
+		}
+		
 		try {
 			conn = DBConnection.getConnection();
 
@@ -248,18 +266,31 @@ public class BoardDao {
 					+ "FROM board ta\n"
 					+ "INNER JOIN (SELECT @rownum := (SELECT	COUNT(*)-?+1 FROM board ta)) tb ON 1=1\n"
 					+ "left join user tc ON ta.u_idx = tc.u_idx\n"
-					//+ "where ta.? = ?\n"
+					+ "where 1=1\n"
+					+ where
 					+ "ORDER BY 	ta.b_group DESC, ta.b_order asc\n"
 					+ "LIMIT ?,?\n";
+			//System.out.println(query);s
 
 	       	pstmt = conn.prepareStatement(query);
 	       	pstmt.setInt(1, pageNum);
-	       	//pstmt.setString(2, board.getB_content());
-	    	//pstmt.setString(3, "1");
-	    	//pstmt.setInt(4, pageNum);
-	    	//pstmt.setInt(5, Pagination.perPage);
-	    	pstmt.setInt(2, pageNum);
-	    	pstmt.setInt(3, Pagination.perPage);
+	       	//pstmt.setString(2, search.getSearchType());
+	       	if(search.getSearchType() != null) {
+	       		//pstmt.setString(2, search.getSearchType());
+	       		pstmt.setString(2, where);
+	       		pstmt.setInt(3, pageNum);
+       			pstmt.setInt(4, Pagination.perPage);
+	       	}
+	       	
+	       	else {
+	       		pstmt.setInt(2, pageNum);
+       			pstmt.setInt(3, Pagination.perPage);
+	       	}
+	       	//pstmt.setString(2, search.setSearchCategory(query));
+	       	//pstmt.setString(2, "");
+	       	//pstmt.setInt(3, pageNum);
+	    	//pstmt.setInt(4, Pagination.perPage);
+	    			
 	    	
 	        rs = pstmt.executeQuery();
 	        list = new ArrayList<Board>();
