@@ -36,6 +36,7 @@ public class BoardDao {
 		try {
 			conn = DBConnection.getConnection();
 			String query = "SELECT COUNT(*) count FROM board ";
+
 	       	pstmt = conn.prepareStatement(query);
 	        rs = pstmt.executeQuery();
 	        
@@ -238,13 +239,12 @@ public class BoardDao {
 		ResultSet rs = null;
 		ArrayList<Board> list = null;
 		int pageNum = pagination.getPageNum();
+		int pageStart = pagination.getStartPage();
+		int pagecount = pagination.getCount();
 		
 		String where = "";
 		
 		switch (search.getSearchType() != null ? search.getSearchType(): "NULL") {
-			case "null":
-				where += "and 1=1 ";
-				break;
 			
 			case "title":
 				where += "and b_title like ? ";
@@ -252,9 +252,7 @@ public class BoardDao {
 			case "content":
 				where += "and b_content like ? ";
 				break;
-			case "write":
-				where += "and u_name like ? ";
-				break;
+
 		}
 		
 		try {
@@ -270,14 +268,13 @@ public class BoardDao {
 					+ where
 					+ "ORDER BY 	ta.b_group DESC, ta.b_order asc\n"
 					+ "LIMIT ?,?\n";
-			//System.out.println(query);s
+			//System.out.println(query);
 
 	       	pstmt = conn.prepareStatement(query);
 	       	pstmt.setInt(1, pageNum);
-	       	//pstmt.setString(2, search.getSearchType());
+	       	
 	       	if(search.getSearchType() != null) {
-	       		//pstmt.setString(2, search.getSearchType());
-	       		pstmt.setString(2, where);
+	       		pstmt.setString(2, "%"+search.getSearchName()+"%");
 	       		pstmt.setInt(3, pageNum);
        			pstmt.setInt(4, Pagination.perPage);
 	       	}
@@ -285,12 +282,7 @@ public class BoardDao {
 	       	else {
 	       		pstmt.setInt(2, pageNum);
        			pstmt.setInt(3, Pagination.perPage);
-	       	}
-	       	//pstmt.setString(2, search.setSearchCategory(query));
-	       	//pstmt.setString(2, "");
-	       	//pstmt.setInt(3, pageNum);
-	    	//pstmt.setInt(4, Pagination.perPage);
-	    			
+	       	}	    			
 	    	
 	        rs = pstmt.executeQuery();
 	        list = new ArrayList<Board>();
@@ -306,28 +298,14 @@ public class BoardDao {
 			    board1.setB_group(rs.getInt("b_group"));
 			    board1.setB_order(rs.getInt("b_order"));
 			    board1.setB_depth(rs.getInt("b_depth"));
-		      	/*
-		      	board.setRownum(rs.getInt("ROWNUM"));
-		      	board.setB_idx(rs.getInt("b_idx"));
-		      	board.setB_title(rs.getString("b_title"));
-		      	board.setB_content(rs.getString("b_content"));
-		      	board.setB_date(rs.getString("b_date"));
-		      	board.setB_viewcount(rs.getInt("b_viewcount"));
-		      	board.setB_group(rs.getInt("b_group"));
-		      	board.setB_order(rs.getInt("b_order"));
-		      	board.setB_depth(rs.getInt("b_depth"));
-		      	*/
+		
 		      	User user = new User();	        	
 		      	user.setU_idx(rs.getInt("u_idx"));
 		      	user.setU_id(rs.getString("u_id"));
 		      	user.setU_name(rs.getString("u_name"));
 		      	user.setU_tel(rs.getString("u_tel"));
 		      	user.setU_age(rs.getString("u_age"));
-		      	/*
-	        	board.setUser(user);
-	           	
-	           	list.add(board);
-	           	*/
+		      
 	        	board1.setUser(user);
 	           	
 	           	list.add(board1);

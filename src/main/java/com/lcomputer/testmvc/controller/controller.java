@@ -235,8 +235,8 @@ public class controller extends HttpServlet {
 				pagination2.setCount(boardcount);
 				pagination2.init();
 				Search search2 = new Search();
-				//search2.setSearchCategory(request.getParameter("b_title"));
-				
+				search2.setSearchType(request.getParameter("searchType"));
+				search2.setSearchName(request.getParameter("searchName"));		
 				
 				ArrayList<Board> list2 = boardService.getBoards(pagination2, board31, search2);
 				request.setAttribute("list", list2);
