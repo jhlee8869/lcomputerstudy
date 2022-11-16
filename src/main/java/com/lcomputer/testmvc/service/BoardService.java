@@ -28,8 +28,8 @@ public class BoardService {
 		return dao.getBoards();
 	}
 	*/
-	public int getBoardCount() {
-		return dao.getBoardCount();
+	public int getBoardCount(Pagination pagination, Search search) {
+		return dao.getBoardCount(pagination, search);
 	}
 	
 	public void insertBoard(Board board) {

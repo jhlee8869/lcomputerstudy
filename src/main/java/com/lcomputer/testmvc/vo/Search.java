@@ -5,6 +5,7 @@ public class Search {
 	private String searchName;
 	private String searchType;
 
+
 	public Search() {
 		
 	}

@@ -228,15 +228,17 @@ public class controller extends HttpServlet {
 				Board board31 = new Board();
 				board31.setB_title(request.getParameter("b_content"));
 				boardService = BoardService.getInstance();
-				boardcount = boardService.getBoardCount();
 				
 				Pagination pagination2 = new Pagination();
+				Search search2 = new Search();
+				search2.setSearchType(request.getParameter("searchType"));
+				search2.setSearchName(request.getParameter("searchName"));
+				
+				boardcount = boardService.getBoardCount(pagination2, search2);
+				
 				pagination2.setPage(page);
 				pagination2.setCount(boardcount);
 				pagination2.init();
-				Search search2 = new Search();
-				search2.setSearchType(request.getParameter("searchType"));
-				search2.setSearchName(request.getParameter("searchName"));		
 				
 				ArrayList<Board> list2 = boardService.getBoards(pagination2, board31, search2);
 				request.setAttribute("list", list2);

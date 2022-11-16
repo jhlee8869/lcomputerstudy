@@ -176,7 +176,7 @@
 						</c:when>
 						<c:when test="${ pagination.page ne i }">
 							<li>
-								<a class=board-listapply href="board-list.do?page=${i}">${i}</a>
+								<a class=board-listapply href="board-list.do?page=${i}&searchType=${search.searchType}&searchName=${search.searchName}">${i}</a>
 							</li>
 						</c:when>
 					</c:choose>
@@ -198,19 +198,21 @@
 				<select name=searchType id=searchType>
 					<option value="none"> === 선택 === </option>
 					<option value="title"> 제목 </option>
-					<option value="content"> 내용 </option>
+					<option value="content" > 내용 </option>
 					<option value="write"> 작성자 </option>
-					<option value="title_content"> 제목 + 내용 </option>
+					<!-- <option value="title_content"> 제목 + 내용 </option> -->
 				</select>
-			</div>
+			</div>	
 		
 			<div class="div_board-search-input1">
-				<input class="p_inputbox1" type="text" name=searchName id=searchName value="" placeholder="검색어를 입력하세요.">
+				<input class="p_inputbox1" type="text" name=searchName id=searchName value="${search.searchName}" placeholder="검색어를 입력하세요.">
 			</div>
 		
 			<div class="div_board-search-button1">
 				<input class=input-search type="submit" value="검색">
 			</div>
+			<!-- <input type="hidden" name="pageNum" value="1">
+			<input type="hidden" name="perPage" value="10"> -->
 		</form>
 		
 	</div>

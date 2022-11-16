@@ -27,17 +27,54 @@ public class BoardDao {
 		return dao;
 	}
 	
-	public int getBoardCount() {
+	public int getBoardCount(Pagination pagination, Search search) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int count = 0;
+		int pageNum = pagination.getPageNum();
+		
+		String where = "";
+		//Search search = new Search();
+		
+		switch(search.getSearchType() != null ? search.getSearchType(): "NULL") {
+
+			case "title":
+				where += "and b_title like ? ";
+				break;
+			case "content":
+				where += "and b_content like ? ";
+				break;
+			case "write":
+				where += "and u_name like ? ";
+				break;
+		}
 
 		try {
 			conn = DBConnection.getConnection();
-			String query = "SELECT COUNT(*) count FROM board ";
+			//String query = "SELECT COUNT(*) count FROM board ";	// 검색 페이징 적용X
 
-	       	pstmt = conn.prepareStatement(query);
+			String query = "SELECT COUNT(*) count\n"
+					+ "FROM board ta\n"
+					+ "left join user tc ON ta.u_idx = tc.u_idx\n"
+					+ "where 1=1\n"
+					+ where
+					+ "ORDER BY ta.b_group DESC, ta.b_order asc\n"
+					+ "LIMIT ?,?\n";
+		
+			pstmt = conn.prepareStatement(query);
+			
+	       	if(search.getSearchType() != null) {
+	       		pstmt.setString(1, "%"+search.getSearchName()+"%");
+	       		pstmt.setInt(2, pageNum);
+       			pstmt.setInt(3, Pagination.perPage);
+	       	}
+	       	
+	       	else {
+	       		pstmt.setInt(1, pageNum);
+       			pstmt.setInt(2, Pagination.perPage);
+	       	}	
+	       	
 	        rs = pstmt.executeQuery();
 	        
 	        while(rs.next()){     
@@ -239,8 +276,6 @@ public class BoardDao {
 		ResultSet rs = null;
 		ArrayList<Board> list = null;
 		int pageNum = pagination.getPageNum();
-		int pageStart = pagination.getStartPage();
-		int pagecount = pagination.getCount();
 		
 		String where = "";
 		
@@ -251,6 +286,9 @@ public class BoardDao {
 				break;
 			case "content":
 				where += "and b_content like ? ";
+				break;
+			case "write":
+				where += "and u_name like ? ";
 				break;
 
 		}
