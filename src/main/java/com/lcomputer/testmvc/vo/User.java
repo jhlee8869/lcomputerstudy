@@ -9,7 +9,14 @@ public class User {
 	private String u_name;
 	private String u_tel;
 	private String u_age;
+	private int u_type;
 	
+	public int getU_type() {
+		return u_type;
+	}
+	public void setU_type(int u_type) {
+		this.u_type = u_type;
+	}
 	public int getRownum() {
 		return rownum;
 	}

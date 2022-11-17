@@ -99,6 +99,7 @@ public class controller extends HttpServlet {
 				user.setU_name(request.getParameter("name"));
 				user.setU_tel(request.getParameter("tel1") + "-" + request.getParameter("tel2") + "-" + request.getParameter("tel3"));
 				user.setU_age(request.getParameter("age"));
+				//user.setU_age(request.getParameter("age"));
 				
 				userService = UserService.getInstance();
 				userService.insertUser(user);

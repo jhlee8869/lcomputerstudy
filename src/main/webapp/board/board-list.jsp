@@ -160,7 +160,7 @@
 			 <c:choose>
 				<c:when test="${ pagination.startPage > 1}">
 					<li style="">
-						<a class=board-listapply href="board-list.do?page=${pagination.prevPage}">◀</a>
+						<a class=board-listapply href="board-list.do?page=${pagination.prevPage}&searchType=${search.searchType}&searchName=${search.searchName}">◀</a>
 					</li>
 				</c:when>
 			</c:choose>
@@ -176,6 +176,7 @@
 						</c:when>
 						<c:when test="${ pagination.page ne i }">
 							<li>
+								<!-- <a class=board-listapply href="board-list.do?page=${i}">${i}</a> -->
 								<a class=board-listapply href="board-list.do?page=${i}&searchType=${search.searchType}&searchName=${search.searchName}">${i}</a>
 							</li>
 						</c:when>
@@ -185,7 +186,7 @@
 			 <c:choose>
 				<c:when test="${ pagination.nextPage le pagination.lastPage }">
 					<li style="">
-						<a class=board-listapply href="board-list.do?page=${pagination.nextPage}">▶</a>
+						<a class=board-listapply href="board-list.do?page=${pagination.nextPage}&searchType=${search.searchType}&searchName=${search.searchName}">▶</a>
 					</li>
 				</c:when>
 			</c:choose> 
@@ -211,8 +212,6 @@
 			<div class="div_board-search-button1">
 				<input class=input-search type="submit" value="검색">
 			</div>
-			<!-- <input type="hidden" name="pageNum" value="1">
-			<input type="hidden" name="perPage" value="10"> -->
 		</form>
 		
 	</div>

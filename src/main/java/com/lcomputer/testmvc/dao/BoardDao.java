@@ -37,17 +37,20 @@ public class BoardDao {
 		String where = "";
 		//Search search = new Search();
 		
-		switch(search.getSearchType() != null ? search.getSearchType(): "NULL") {
-
-			case "title":
-				where += "and b_title like ? ";
-				break;
-			case "content":
-				where += "and b_content like ? ";
-				break;
-			case "write":
-				where += "and u_name like ? ";
-				break;
+		if (search.getSearchType() != null && !search.getSearchType().equals("")) {
+		
+			switch(search.getSearchType()) {
+	
+				case "title":
+					where += "and b_title like ? ";
+					break;
+				case "content":
+					where += "and b_content like ? ";
+					break;
+				case "write":
+					where += "and u_name like ? ";
+					break;
+			}
 		}
 
 		try {
@@ -64,7 +67,7 @@ public class BoardDao {
 		
 			pstmt = conn.prepareStatement(query);
 			
-	       	if(search.getSearchType() != null) {
+			if (search.getSearchType() != null && !search.getSearchType().equals("")) {
 	       		pstmt.setString(1, "%"+search.getSearchName()+"%");
 	       		pstmt.setInt(2, pageNum);
        			pstmt.setInt(3, Pagination.perPage);
@@ -279,18 +282,20 @@ public class BoardDao {
 		
 		String where = "";
 		
-		switch (search.getSearchType() != null ? search.getSearchType(): "NULL") {
+		if (search.getSearchType() != null && !search.getSearchType().equals("")) {
 			
-			case "title":
-				where += "and b_title like ? ";
-				break;
-			case "content":
-				where += "and b_content like ? ";
-				break;
-			case "write":
-				where += "and u_name like ? ";
-				break;
-
+			switch(search.getSearchType()) {
+	
+				case "title":
+					where += "and b_title like ? ";
+					break;
+				case "content":
+					where += "and b_content like ? ";
+					break;
+				case "write":
+					where += "and u_name like ? ";
+					break;
+			}
 		}
 		
 		try {
@@ -309,18 +314,20 @@ public class BoardDao {
 			//System.out.println(query);
 
 	       	pstmt = conn.prepareStatement(query);
-	       	pstmt.setInt(1, pageNum);
-	       	
-	       	if(search.getSearchType() != null) {
+
+   			
+   			if (search.getSearchType() != null && !search.getSearchType().equals("")) {
+	       		pstmt.setInt(1, pageNum);
 	       		pstmt.setString(2, "%"+search.getSearchName()+"%");
 	       		pstmt.setInt(3, pageNum);
        			pstmt.setInt(4, Pagination.perPage);
 	       	}
 	       	
 	       	else {
+	       		pstmt.setInt(1, pageNum);
 	       		pstmt.setInt(2, pageNum);
        			pstmt.setInt(3, Pagination.perPage);
-	       	}	    			
+	       	}
 	    	
 	        rs = pstmt.executeQuery();
 	        list = new ArrayList<Board>();
