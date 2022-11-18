@@ -55,7 +55,10 @@ public class UserService {
 	public void deleteUser(User user) {
 		dao.deleteUser(user);
 	}
-
+	
+	public void changeTypeUser(User user) {
+		dao.deleteUser(user);
+	}
 
 }
 

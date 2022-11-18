@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import com.lcomputer.testmvc.database.DBConnection;
+import com.lcomputer.testmvc.vo.Comment;
 import com.lcomputer.testmvc.vo.Pagination;
 import com.lcomputer.testmvc.vo.User;
 
@@ -44,6 +45,7 @@ public class UserDAO {
        	       	user.setU_name(rs.getString("u_name"));
        	       	user.setU_tel(rs.getString("u_tel"));
        	       	user.setU_age(rs.getString("u_age"));
+       	       	user.setU_type(rs.getInt("u_type"));
        	       	list.add(user);
 	        }
 		} catch (Exception e) {
@@ -350,6 +352,31 @@ public class UserDAO {
 			//pstmt.setString(5, user.getU_tel());
 			//pstmt.setString(6, user.getU_age());
 			pstmt.executeUpdate();
+		} catch( Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void changeTypeUser(User user) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+			
+		try {
+			conn = DBConnection.getConnection();
+			String sql = "update user set u_type = ? where u_idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user.getU_type());
+			pstmt.setInt(2, user.getU_idx());
+
+			pstmt.executeUpdate();
+			
 		} catch( Exception ex) {
 			ex.printStackTrace();
 		} finally {

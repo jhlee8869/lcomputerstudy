@@ -44,13 +44,10 @@
 		border-radius:5px;
 	}
 	
-	div {
-		width: 600px;
-		height: 60px;
-	}
-	
 	.div_user-pagination {
 		margin:10px auto;
+		width: 600px;
+		height: 60px;
 		text-align: center;
 		
 	}
@@ -83,16 +80,29 @@
 	}
 	.usertype1 {
 		margin:auto;
-		width:400px;height:30%;
+		width:300px;height:30%;
 		text-align:center;
 	}
 	.usertype2 {
 		margin:auto;
-		width:40%;height:20%;
+		width:7%;height:20%;
+		text-align:center;
+	}
+	.usertype3 {
+		margin:auto;
+		width:7%;height:20%;
+		text-align:center;
+	}
+	.usertype4 {
+		margin:auto;
+		width:30%;height:20%;
 		text-align:center;
 	}
 		
 </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 <body>
 <h1>회원 목록</h1>
 	<table >
@@ -107,21 +117,22 @@
 			<th>이름</th>
 			<th>권한</th>
 		</tr>
+		
+		
 		<c:forEach items="${list}" var="item" varStatus="status">
 			 <tr>
 			 	<td><a class=user-listapply href="user-detail.do?u_idx=${item.u_idx}">${item.rownum}</a></td>
 				<td>${item.u_id}</td>
 				<td>${item.u_name}</td>
 				<td>
-					<form action="" name="user" method="post">
-						<div class="usertype1">
-							<div class="usertype2">
-							<input type="checkbox" name=userType value="일반회원">일반회원
-							<input type="checkbox" name=userType value="관리자">관리자					
-							<input class="usertype2" type="submit" value="권한변경">
-							</div>
+						<div id="displayShow1" class="usertype1">
+								<input class="userType2" type="radio" name="userType2" value="1" />일반회원
+								<input class="userType3" type="radio" name="userType3" value="2" />관리자					
 						</div>
-					</form>
+						
+						<div id="displayShow2" style="display: none;">
+							<button type="button" class="userTypechange" u_type="${user.u_type}">권한변경</button>
+						</div>
 				</td>
 		     <tr>
 		</c:forEach>
@@ -170,5 +181,50 @@
 
 		</div>
 	</div>
+	
+	<script>
+	<%!
+	
+	%>
+	$(document).on('click', '.userType2', function () {
+		if('.userType2') {
+			$(this).parent().next().css('display', 'block');
+		}
+		else {
+			$(this).parent().next().css('display', 'none');
+			$('.userType3').parent().next().css('display', 'none');
+		}
+
+	});
+	
+	$(document).on('click', '.userType3', function () {
+		if('.userType3') {
+			$(this).parent().next().css('display', 'block');
+		}
+		else {
+			$(this).parent().next().css('display', 'none');
+			$('.userType2').parent().next().css('display', 'none');
+		}
+	});	
+	
+	$(document).on('click', '.userTypechange', function () {
+		let uType = $(this).val();
+		console.log(uType);
+		
+		$.ajax({
+			method: "POST",
+			url: "user-list.do",
+			data: { u_idx: '${user.u_idx}', u_type: uType}
+		})
+	   .done(function( html ) {
+	   		console.log(html);
+	   		$('#user-listapply').html(html);
+	   });
+		
+		$(this).parent().submit();
+	});
+	
+	</script>
+	
 </body>
 </html>

@@ -58,19 +58,20 @@ public class controller extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		switch (command) {
+			
 			case "/user-list.do":
 				String reqPage = request.getParameter("page");
-				/*
-				if (reqPage != null) { 
-					page = Integer.parseInt(reqPage);
-					page = (page-1)*3;
-				}
-				*/
+
 				if (reqPage != null)
 					page = Integer.parseInt(reqPage);
+				
+				User user22 = new User();
+				//user22.setU_idx(Integer.parseInt(request.getParameter("u_idx")));
+				//user22.setU_type(Integer.parseInt(request.getParameter("u_type")));
 
 				UserService userService = UserService.getInstance();
 				usercount = userService.getUsersCount();
+				userService.changeTypeUser(user22);
 				
 				Pagination pagination = new Pagination();
 				pagination.setPage(page);
@@ -78,13 +79,12 @@ public class controller extends HttpServlet {
 				pagination.init();
 				
 				ArrayList<User> list = userService.getUsers(pagination);
-		
-				//usercount = userService.getUsersCount();	//추가
-				request.setAttribute("list", list);
-				//request.setAttribute("usercount", usercount);	//추가
-				request.setAttribute("pagination", pagination);	//추가
 				
 				view = "user/list";
+				
+				request.setAttribute("list", list);
+				request.setAttribute("pagination", pagination);	//추가
+				
 				break;
 				
 			case "/user-insert.do":
@@ -301,9 +301,7 @@ public class controller extends HttpServlet {
 				view = "board/board-detail";
 
 				request.setAttribute("board", board3);
-				//request.setAttribute("comment", comment1);
 				request.setAttribute("commentList", commentList);
-				//request.setAttribute("commentList", commentList);
 				
 				break;
 				
