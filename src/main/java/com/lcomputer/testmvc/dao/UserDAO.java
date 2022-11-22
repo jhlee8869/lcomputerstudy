@@ -189,6 +189,7 @@ public class UserDAO {
 	           	user.setU_name(rs.getString("u_name"));
 	           	user.setU_tel(rs.getString("u_tel"));
 	           	user.setU_age(rs.getString("u_age"));
+	           	user.setU_type(rs.getInt("u_type"));
 	           	
 	           	list.add(user);
 	        }
@@ -352,6 +353,7 @@ public class UserDAO {
 			//pstmt.setString(5, user.getU_tel());
 			//pstmt.setString(6, user.getU_age());
 			pstmt.executeUpdate();
+			
 		} catch( Exception ex) {
 			ex.printStackTrace();
 		} finally {

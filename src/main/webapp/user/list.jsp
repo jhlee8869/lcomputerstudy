@@ -105,9 +105,9 @@
 
 <body>
 <h1>회원 목록</h1>
-	<table >
+	<table id=tablistall>
 		
-		<tr>
+		<tr id=trlistall>
 			<td colspan="4">전체 회원 수 : ${pagination.count }</td>
 		<tr>
 		
@@ -118,26 +118,45 @@
 			<th>권한</th>
 		</tr>
 		
-		
-		<c:forEach items="${list}" var="item" varStatus="status">
-			 <tr>
-			 	<td><a class=user-listapply href="user-detail.do?u_idx=${item.u_idx}">${item.rownum}</a></td>
-				<td>${item.u_id}</td>
-				<td>${item.u_name}</td>
-				<td>
+		<c:forEach items="${list}" var="user" varStatus="status">
+
+			 <tr id=trlist>
+			 	<td><a class=user-listapply href="user-detail.do?u_idx=${user.u_idx}">${user.rownum}</a></td>
+				<td>${user.u_id}</td>
+				<td>${user.u_name}</td>
+				<td id="tdlist1">
+					<form action="user-list.do" name="user" method="post">
 						<div id="displayShow1" class="usertype1">
-								<input class="userType2" type="radio" name="userType2" value="1" />일반회원
-								<input class="userType3" type="radio" name="userType3" value="2" />관리자					
+						<p>${user.u_type}</p>
+							
+							<c:if test="${user.u_type == 1}">
+								<input class="userType3" type="button" name="userType3" value="관리자">
+
+							</c:if>
+							
+							<c:if test="${user.u_type == 2}">
+								<input class="userType2" type="button" name="userType2" value="일반회원">
+							</c:if>
+							
+							<c:if test="${user.u_type == 0}">
+								<input class="userType4" type="button" name="userType4" value="일반회원">
+							</c:if>
+
 						</div>
 						
 						<div id="displayShow2" style="display: none;">
-							<button type="button" class="userTypechange" u_type="${user.u_type}">권한변경</button>
+							<button type="button" class="userTypechange1" u_type="${user.u_type}" u_idx="${user.u_idx}">일반회원</button>
 						</div>
+						<div id="displayShow3" style="display: none;">
+							<button type="button" class="userTypechange2" u_type="${user.u_type}" u_idx="${user.u_idx}">관리자</button>
+						</div>
+					</form>
 				</td>
-		     <tr>
+		     </tr>
 		</c:forEach>
+		
 	</table>
-	
+
 	<div class=div_user-pagination>
 		<ul>
 			 <c:choose>
@@ -164,7 +183,7 @@
 						</c:when>
 					</c:choose>
 			</c:forEach>
-			
+
 			 <c:choose>
 				<c:when test="${ pagination.nextPage lt pagination.lastPage }">
 					<li style="">
@@ -173,7 +192,8 @@
 				</c:when>
 			</c:choose> 
 		</ul>
-	</div>
+		</div>
+	
 	
 	<div class="div_user-button"> 
 		<div class="div_user-button-two">
@@ -183,42 +203,55 @@
 	</div>
 	
 	<script>
-	<%!
 	
-	%>
 	$(document).on('click', '.userType2', function () {
-		if('.userType2') {
-			$(this).parent().next().css('display', 'block');
-		}
-		else {
-			$(this).parent().next().css('display', 'none');
-			$('.userType3').parent().next().css('display', 'none');
-		}
-
+			$(this).parent().next().css('display', 'block');	
 	});
 	
 	$(document).on('click', '.userType3', function () {
-		if('.userType3') {
-			$(this).parent().next().css('display', 'block');
-		}
-		else {
-			$(this).parent().next().css('display', 'none');
-			$('.userType2').parent().next().css('display', 'none');
-		}
+
+			$(this).parent().next().next().css('display', 'block');
 	});	
 	
-	$(document).on('click', '.userTypechange', function () {
-		let uType = $(this).val();
+	$(document).on('click', '.userType4', function () {
+			$(this).parent().next().css('display', 'block');
+			$(this).parent().next().next().css('display', 'none');
+	});
+	
+	$(document).on('click', '.userTypechange1', function () {
+		let uType = 1;
+		let uIdx = $(this).attr('u_idx');
+		console.log(uType);
+		console.log(uIdx);
+		
+		$.ajax({
+			method: "POST",
+			url: "user-list-process.do",
+			<!-- data: { u_idx: '${user.u_idx}', u_type: uType} -->
+			data: { u_idx: uIdx, u_type: uType}
+		})
+	   .done(function( html ) {
+	   		console.log(html);
+	   		$('#tablistall').html(html);
+	   });
+		
+		$(this).parent().submit();
+	});
+	
+	$(document).on('click', '.userTypechange2', function () {
+		let uType = 2;
+		let uIdx = $(this).attr('u_idx');
 		console.log(uType);
 		
 		$.ajax({
 			method: "POST",
-			url: "user-list.do",
-			data: { u_idx: '${user.u_idx}', u_type: uType}
+			url: "user-list-process.do",
+			<!-- data: { u_idx: '${user.u_idx}', u_type: uType} -->
+			data: { u_idx: uIdx, u_type: uType}
 		})
 	   .done(function( html ) {
 	   		console.log(html);
-	   		$('#user-listapply').html(html);
+	   		$('#tablistall').html(html);
 	   });
 		
 		$(this).parent().submit();

@@ -40,11 +40,13 @@ public class controller extends HttpServlet {
 		String idx = null;
 		
 		HttpSession session = null;
+		UserService userService = null;
 		BoardService boardService = null;
 		CommentService commentService = null;
 		//Comment comment = null;
 		//List<Comment> commentList = null;
 		//ArrayList<Board> boardList = null;
+		ArrayList<User> userList = null;
 		ArrayList<Comment> commentList = null;
 		command = checkSession(request, response, command);
 		
@@ -69,7 +71,7 @@ public class controller extends HttpServlet {
 				//user22.setU_idx(Integer.parseInt(request.getParameter("u_idx")));
 				//user22.setU_type(Integer.parseInt(request.getParameter("u_type")));
 
-				UserService userService = UserService.getInstance();
+				userService = UserService.getInstance();
 				usercount = userService.getUsersCount();
 				userService.changeTypeUser(user22);
 				
@@ -493,40 +495,24 @@ public class controller extends HttpServlet {
 				
 				break;
 				
-			case "/board-search-process.do":
+				//권한 설정
+			case "/user-list-process.do":
+
 				
+				User user21 = new User();
+				user21.setU_type(Integer.parseInt(request.getParameter("u_type")));
+				user21.setU_idx(Integer.parseInt(request.getParameter("u_idx")));
 				
-				view = "board/board-list";
+				userService = UserService.getInstance();
+				userService.changeTypeUser(user21);
 				
-				//request.setAttribute("list", list2);
-				//request.setAttribute("pagination", pagination2);	//추가
-				//view = "board/board-list";
+				Pagination pagination215 = new Pagination();
 				
-				break;
+				userList = userService.getUsers(pagination215);
 				
-			case "/board-search.do":
-				/*
-				String reqPage2 = request.getParameter("page");
-				
-				if (reqPage2 != null)
-					page = Integer.parseInt(reqPage2);
-				
-				boardService = BoardService.getInstance();
-				boardcount = boardService.getBoardCount();
-				//boardviewcount = boardService.getBoardviewcount();
-				
-				Pagination pagination2 = new Pagination();
-				pagination2.setPage(page);
-				pagination2.setCount(boardcount);
-				//pagination2.setCount(boardviewcount);
-				pagination2.init();
-				Search search2 = new Search();
-				
-				ArrayList<Board> list2 = boardService.getBoards(pagination2, search2);
-				request.setAttribute("list", list2);
-				request.setAttribute("pagination", pagination2);	//추가
-				*/
-				//view = "board/board-list";
+				view = "user/aj-user-list";
+				//request.setAttribute("user", user21);
+				request.setAttribute("list", userList);
 				
 				break;
 				
