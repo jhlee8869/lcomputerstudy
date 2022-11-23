@@ -2,9 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<table id="userlist12">
 		
-		<tr id=trlistall>
-			<td colspan="4">전체 회원 수 : ${pagination.count }</td>
+		<tr>
+			<td colspan="4">전체 회원 수 : ${pagination.count}</td>
 		<tr>
 		
 		<tr>
@@ -13,10 +14,10 @@
 			<th>이름</th>
 			<th>권한</th>
 		</tr>
-		
+
 		<c:forEach items="${list}" var="user" varStatus="status">
 
-			 <tr id=trlist>
+			 <tr>
 			 	<td><a class=user-listapply href="user-detail.do?u_idx=${user.u_idx}">${user.rownum}</a></td>
 				<td>${user.u_id}</td>
 				<td>${user.u_name}</td>
@@ -25,12 +26,12 @@
 						<div id="displayShow1" class="usertype1">
 						<p>${user.u_type}</p>
 							
-							<c:if test="${user.u_type == 1}">
+							<c:if test="${user.u_type == 2}">
 								<input class="userType3" type="button" name="userType3" value="관리자">
 
 							</c:if>
 							
-							<c:if test="${user.u_type == 2}">
+							<c:if test="${user.u_type == 1}">
 								<input class="userType2" type="button" name="userType2" value="일반회원">
 							</c:if>
 							
@@ -50,3 +51,5 @@
 				</td>
 		     </tr>
 		</c:forEach>
+
+	</table>

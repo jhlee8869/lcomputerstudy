@@ -66,14 +66,9 @@ public class controller extends HttpServlet {
 
 				if (reqPage != null)
 					page = Integer.parseInt(reqPage);
-				
-				User user22 = new User();
-				//user22.setU_idx(Integer.parseInt(request.getParameter("u_idx")));
-				//user22.setU_type(Integer.parseInt(request.getParameter("u_type")));
 
 				userService = UserService.getInstance();
 				usercount = userService.getUsersCount();
-				userService.changeTypeUser(user22);
 				
 				Pagination pagination = new Pagination();
 				pagination.setPage(page);
@@ -497,22 +492,25 @@ public class controller extends HttpServlet {
 				
 				//권한 설정
 			case "/user-list-process.do":
-
 				
 				User user21 = new User();
 				user21.setU_type(Integer.parseInt(request.getParameter("u_type")));
 				user21.setU_idx(Integer.parseInt(request.getParameter("u_idx")));
 				
 				userService = UserService.getInstance();
+				usercount = userService.getUsersCount();
 				userService.changeTypeUser(user21);
-				
+
 				Pagination pagination215 = new Pagination();
+				pagination215.setPage(page);
+				pagination215.setCount(usercount);
+				pagination215.init();
 				
 				userList = userService.getUsers(pagination215);
 				
 				view = "user/aj-user-list";
-				//request.setAttribute("user", user21);
 				request.setAttribute("list", userList);
+				request.setAttribute("pagination", pagination215);
 				
 				break;
 				

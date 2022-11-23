@@ -257,7 +257,11 @@
 		<div id="div_body_all">
 			<div id="div_body1">
 				<div id="div_bd" class="div_bd_edit">
-					<a href="board-edit.do?b_idx=${board.b_idx}">수정</a>
+
+					<c:if test="${board.user.u_id == }">
+						<a href="board-edit.do?b_idx=${board.b_idx}">수정</a>
+					</c:if>
+					
 				</div>
 				<div id="div_bd" class="div_bd_delete">
 					<a href="board-delete.do?b_idx=${board.b_idx}">삭제</a>
