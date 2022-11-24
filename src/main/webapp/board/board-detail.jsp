@@ -234,6 +234,7 @@
 <body>
 <h1>자유게시글 </h1>
 	<input type="hidden" name="b_idx" value="${board.b_idx}">
+
 		<div class="div_body">	
 		
 			<div class="div_title">
@@ -256,15 +257,16 @@
 		
 		<div id="div_body_all">
 			<div id="div_body1">
+					
 				<div id="div_bd" class="div_bd_edit">
-
-					<c:if test="${board.user.u_id == }">
+					<c:if test="${sessionScope.user.u_idx == board.u_idx}">
 						<a href="board-edit.do?b_idx=${board.b_idx}">수정</a>
 					</c:if>
-					
 				</div>
 				<div id="div_bd" class="div_bd_delete">
-					<a href="board-delete.do?b_idx=${board.b_idx}">삭제</a>
+					<c:if test="${sessionScope.user.u_type == 2 || sessionScope.user.u_idx == board.u_idx}">
+						<a href="board-delete.do?b_idx=${board.b_idx}">삭제</a>
+					</c:if>
 				</div>
 				<div id="div_bd" class="div_bd_insert">
 					<a href="board-insert.do?b_idx=${board.b_idx}">글쓰기</a>

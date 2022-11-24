@@ -226,6 +226,7 @@ public class UserDAO {
 	        	user.setU_pw(rs.getString("u_pw"));
 	        	user.setU_id(rs.getString("u_id"));
 	        	user.setU_name(rs.getString("u_name"));
+	        	user.setU_type(rs.getInt("u_type"));
 		   }
 		} catch( Exception ex) {
 			System.out.println("SQLException : "+ex.getMessage());

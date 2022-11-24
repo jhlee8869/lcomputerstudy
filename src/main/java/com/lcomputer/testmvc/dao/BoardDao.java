@@ -232,6 +232,7 @@ public class BoardDao {
 	        	user.setU_name(rs.getString("u_name"));
 	        	user.setU_tel(rs.getString("u_tel"));
 	        	user.setU_age(rs.getString("u_age"));
+	        	user.setU_type(rs.getInt("u_type"));
 	        	board.setUser(user);
 	        	
 	        	

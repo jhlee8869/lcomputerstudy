@@ -84,6 +84,38 @@ public class controller extends HttpServlet {
 				
 				break;
 				
+				//권한 설정
+			case "/user-list-process.do":
+				
+				String reqPage3 = request.getParameter("page");
+				
+				if (reqPage3 != null)
+					page = Integer.parseInt(reqPage3);
+				
+				User user21 = new User();
+				user21.setU_type(Integer.parseInt(request.getParameter("u_type")));
+				user21.setU_idx(Integer.parseInt(request.getParameter("u_idx")));
+				
+				userService = UserService.getInstance();
+				userService.changeTypeUser(user21);
+				usercount = userService.getUsersCount();
+				
+				
+				Pagination pagination215 = new Pagination();
+				//userList = userService.getUsers(pagination215);
+						
+				pagination215.setPage(page);
+				pagination215.setCount(usercount);
+				pagination215.init();
+				
+				userList = userService.getUsers(pagination215);
+				
+				view = "user/aj-user-list";
+				request.setAttribute("list", userList);
+				request.setAttribute("pagination", pagination215);
+				
+				break;
+				
 			case "/user-insert.do":
 				view = "user/insert";
 				break;
@@ -277,12 +309,12 @@ public class controller extends HttpServlet {
 			// 상세 화면					
 			case "/board-detail.do":
 				
-				//session = request.getSession();
-				//user = (User)session.getAttribute("user");
-				
+				session = request.getSession();
+				user = (User)session.getAttribute("user");
+
 				Board board3 = new Board();
 				board3.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				
+				board3.setUser(user);
 				boardService = BoardService.getInstance();
 				Pagination pagination3 = new Pagination();
 				
@@ -296,7 +328,7 @@ public class controller extends HttpServlet {
 				commentList = commentService.getComment(pagination3, board3);
 				
 				view = "board/board-detail";
-
+				
 				request.setAttribute("board", board3);
 				request.setAttribute("commentList", commentList);
 				
@@ -487,30 +519,6 @@ public class controller extends HttpServlet {
 				
 				view = "comment/aj-comment-reply";
 				request.setAttribute("commentList", commentList);
-				
-				break;
-				
-				//권한 설정
-			case "/user-list-process.do":
-				
-				User user21 = new User();
-				user21.setU_type(Integer.parseInt(request.getParameter("u_type")));
-				user21.setU_idx(Integer.parseInt(request.getParameter("u_idx")));
-				
-				userService = UserService.getInstance();
-				usercount = userService.getUsersCount();
-				userService.changeTypeUser(user21);
-
-				Pagination pagination215 = new Pagination();
-				pagination215.setPage(page);
-				pagination215.setCount(usercount);
-				pagination215.init();
-				
-				userList = userService.getUsers(pagination215);
-				
-				view = "user/aj-user-list";
-				request.setAttribute("list", userList);
-				request.setAttribute("pagination", pagination215);
 				
 				break;
 				

@@ -106,7 +106,9 @@
 <body>
 <h1>회원 목록</h1>
 
-	<table id="userlist12">
+<div id="utest1">
+<form action="user-list.do" name="user" method="post">
+	<table>
 		
 		<tr>
 			<td colspan="4">전체 회원 수 : ${pagination.count}</td>
@@ -118,6 +120,7 @@
 			<th>이름</th>
 			<th>권한</th>
 		</tr>
+	
 
 		<c:forEach items="${list}" var="user" varStatus="status">
 
@@ -125,8 +128,7 @@
 			 	<td><a class=user-listapply href="user-detail.do?u_idx=${user.u_idx}">${user.rownum}</a></td>
 				<td>${user.u_id}</td>
 				<td>${user.u_name}</td>
-				<td id="tdlist1">
-					<form action="user-list.do" name="user" method="post">
+				<td>
 						<div id="displayShow1" class="usertype1">
 						<p>${user.u_type}</p>
 							
@@ -146,18 +148,18 @@
 						</div>
 						
 						<div id="displayShow2" style="display: none;">
-							<button type="button" class="userTypechange1" u_type="${user.u_type}" u_idx="${user.u_idx}">일반회원</button>
+							<button type="button" class="userTypechange1" u_type="${user.u_type}" u_idx="${user.u_idx}" page="${pagination.page}">일반회원</button>
 						</div>
 						<div id="displayShow3" style="display: none;">
-							<button type="button" class="userTypechange2" u_type="${user.u_type}" u_idx="${user.u_idx}">관리자</button>
+							<button type="button" class="userTypechange2" u_type="${user.u_type}" u_idx="${user.u_idx}" page="${pagination.page}">관리자</button>
 						</div>
-					</form>
+						
 				</td>
 		     </tr>
 		</c:forEach>
 
 	</table>
-
+</form>
 	<div class=div_user-pagination>
 		<ul>
 			 <c:choose>
@@ -202,7 +204,7 @@
 		</div>
 	</div>
 </div>
-
+</div>
 	<script>
 	
 	$(document).on('click', '.userType2', function () {
@@ -217,6 +219,7 @@
 	$(document).on('click', '.userTypechange1', function () {
 		let uType = 1;
 		let uIdx = $(this).attr('u_idx');
+		let Page = $(this).attr('page'); 
 		console.log(uType);
 		console.log(uIdx);
 		
@@ -224,11 +227,11 @@
 			method: "POST",
 			url: "user-list-process.do",
 			<!-- data: { u_idx: '${user.u_idx}', u_type: uType} -->
-			data: { u_idx: uIdx, u_type: uType}
+			data: { u_idx: uIdx, u_type: uType, page: Page}
 		})
 	   .done(function( html ) {
 	   		console.log(html);
-	   		$('#userlist12').html(html);
+	   		$('#utest1').html(html);
 	   });
 		
 		$(this).parent().submit();
@@ -237,17 +240,18 @@
 	$(document).on('click', '.userTypechange2', function () {
 		let uType = 2;
 		let uIdx = $(this).attr('u_idx');
+		let Page = $(this).attr('page'); 
 		console.log(uType);
 		
 		$.ajax({
 			method: "POST",
 			url: "user-list-process.do",
 			<!-- data: { u_idx: '${user.u_idx}', u_type: uType} -->
-			data: { u_idx: uIdx, u_type: uType}
+			data: { u_idx: uIdx, u_type: uType, page: Page}
 		})
 	   .done(function( html ) {
 	   		console.log(html);
-	   		$('#userlist12').html(html);
+	   		$('#utest1').html(html);
 	   });
 		
 		$(this).parent().submit();
