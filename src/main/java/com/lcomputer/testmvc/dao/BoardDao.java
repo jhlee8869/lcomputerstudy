@@ -103,7 +103,7 @@ public class BoardDao {
 			
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "insert into board(b_title, b_content, b_date, b_viewcount, u_idx, b_group, b_order, b_depth) values(?, ?, now(), ?, ?, ?, ?, ?)";
+			String sql = "insert into board(b_title, b_content, b_date, b_viewcount, u_idx, b_group, b_order, b_depth, b_filename) values(?, ?, now(), ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, board.getB_title());
@@ -113,6 +113,7 @@ public class BoardDao {
 			pstmt.setInt(5, board.getB_group());
 			pstmt.setInt(6, board.getB_order());
 			pstmt.setInt(7, board.getB_depth());
+			pstmt.setString(8, board.getB_filename());
 			
 			pstmt.executeUpdate();
 			
@@ -225,6 +226,7 @@ public class BoardDao {
 	        	board.setB_order(rs.getInt("b_order"));
 	        	board.setB_depth(rs.getInt("b_depth"));
 	        	board.setU_idx(rs.getInt("u_idx"));
+	        	board.setB_filename(rs.getString("b_filename"));
 	        	
 	        	User user = new User();
 	        	user.setU_id(rs.getString("u_id"));
@@ -444,6 +446,29 @@ public class BoardDao {
 			pstmt.executeUpdate();
 	
 			
+		} catch( Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void fileUpload(Board board) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+			
+		try {
+			conn = DBConnection.getConnection();
+			String sql = "update board set b_filename = ? where b_idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, board.getB_filename());
+			pstmt.setInt(2, board.getB_idx());
+			pstmt.executeUpdate();
 		} catch( Exception ex) {
 			ex.printStackTrace();
 		} finally {

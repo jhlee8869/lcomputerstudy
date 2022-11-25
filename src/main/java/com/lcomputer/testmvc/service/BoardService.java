@@ -72,5 +72,9 @@ public class BoardService {
 		dao.replyinsertBoard(board);
 	}
 	
+	public void fileUpload(Board board) {
+		dao.fileUpload(board);
+	}
+	
 	
 }

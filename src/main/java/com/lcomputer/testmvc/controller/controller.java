@@ -21,6 +21,9 @@ import com.lcomputer.testmvc.vo.User;
 import com.lcomputer.testmvc.vo.Board;
 import com.lcomputer.testmvc.vo.Comment;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 @WebServlet("*.do")
 public class controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -38,6 +41,13 @@ public class controller extends HttpServlet {
 		String view = null;
 		String pw = null;
 		String idx = null;
+		
+		String saveDir = "C:\\Users\\l5-morning";
+		int size = 10 * 1024 * 1024;
+		//MultipartRequest multi = new MultipartRequest(request, saveDir, size, "utf-8", new DefaultFileRenamePolicy());
+		//String name = multi.getFilesystemName("b_filename");
+		//String origin = multi.getOriginalFileName("b_filename");
+		//long fileSize = multi.getFile("b_filename").length();
 		
 		HttpSession session = null;
 		UserService userService = null;
@@ -296,7 +306,7 @@ public class controller extends HttpServlet {
 				Board board = new Board();
 				board.setB_title(request.getParameter("b_title"));
 				board.setB_content(request.getParameter("b_content"));
-				//board.setB_viewcount(Integer.parseInt(request.getParameter("b_viewcount")));
+				board.setB_filename(request.getParameter("b_filename"));
 				board.setUser(user);
 				
 				boardService = BoardService.getInstance();
@@ -333,6 +343,27 @@ public class controller extends HttpServlet {
 				request.setAttribute("commentList", commentList);
 				
 				break;
+
+				
+			// 파일 업로드					
+			case "/board-fileUpload.do":
+				
+				session = request.getSession();
+				user = (User)session.getAttribute("user");
+				
+				Board board300 = new Board();
+				board300.setB_filename(request.getParameter("b_filename"));
+				board300.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				boardService = BoardService.getInstance();
+				
+				boardService.fileUpload(board300);
+				
+				view = "board/board-fileUpload";
+				
+				request.setAttribute("board", board300);
+				
+				break;
+				
 				
 			// 수정 화면					
 			case "/board-edit.do":

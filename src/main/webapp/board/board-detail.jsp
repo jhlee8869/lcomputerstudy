@@ -79,14 +79,25 @@
 	
 	#div_body_all {
 		margin:10px auto;
+		margin-left:1%;	
 		width:400px;height:30px;
 		float:left;
 	}
 	#div_body_all2 {
 		margin:10px auto;
-		margin-top:70px;
 		width:400px;height:30px;
 		float:left;
+		position: relative;
+		top:60px;
+	
+	}
+	
+	.3r4243243223div_FileBody {
+		margin: 10px auto;
+		width:400px;height:30px;
+		float:left;
+		position: absolute;
+		top:450px;
 	}
 	
 	#div_body1 {
@@ -224,7 +235,6 @@
 		font-size:17px;font-family:굴림;
 		
 	}
-	
 	
 </style>
 

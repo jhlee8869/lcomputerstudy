@@ -14,6 +14,14 @@ public class Board {
 	private User user;
 	private Comment comment;
 	private int u_idx;
+	private String b_filename;
+	
+	public String getB_filename() {
+		return b_filename;
+	}
+	public void setB_filename(String b_filename) {
+		this.b_filename = b_filename;
+	}
 	
 	public int getU_idx() {
 		return u_idx;
