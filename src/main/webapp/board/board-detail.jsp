@@ -263,6 +263,13 @@
 			<div class="div_content">
 				<p class=p_content> 내용 : ${board.b_content}</p>
 			</div>
+			<div class="div_filename">
+				<p class=p_filename> 파일 : ${board.b_filename}</p>
+				<!-- <img src="C:\Users\l5-morning\Documents\work11\lcomputerstudy\src\main\webapp\img\">${board.b_filename} -->
+				<img src="./img/${board.b_filename}">
+
+			</div>
+
 		</div>
 		
 		<div id="div_body_all">

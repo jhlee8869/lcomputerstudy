@@ -39,15 +39,16 @@
 <h1>자유게시판</h1>
 		<pre>  게시글 작성</pre>
 		
+	<!-- <form action="board-insert-process.do" name="board" method="post" enctype="multipart/form-data"> -->
 	<form action="board-insert-process.do" name="board" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="b_idx" value="${board.b_idx}">
+		<input type="hidden" name="b_idx" value="${board.b_idx}">
 	
-	<p> 제목 : <input type="text" name="b_title" value="${board.b_title}"></p>
-	<p> 내용 : <input type="text" name="b_content" value="${board.b_content}"></p>
-	<p> 첨부파일 : <input type="file" name="b_filename" value="${board.b_filename}"></p>
-	<p> <input type="submit" value="작성"></p>
+			<p> 제목 : <input type="text" name="b_title"  value="${board.b_title}"></p>
+			<p> 내용 : <input type="text" name="b_content"  value="${board.b_content}"></p>
+			<p> 첨부파일 : <input type="file" name="b_filename" value="${board.b_filename}"></p>
+			<p> <input type="submit" value="작성"></p>
 
-</form>
+	</form>
 
 	<table>
 		<td style="border:none;width:100px;">

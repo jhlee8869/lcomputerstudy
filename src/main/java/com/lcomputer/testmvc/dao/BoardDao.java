@@ -123,6 +123,14 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
 			
+			pstmt.close();
+			
+			sql = "update board set b_filename = ? where b_idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, board.getB_filename());
+			pstmt.setInt(2, board.getB_idx());
+			pstmt.executeUpdate();
+			
 		} catch( Exception ex) {
 			ex.printStackTrace();
 		} finally {

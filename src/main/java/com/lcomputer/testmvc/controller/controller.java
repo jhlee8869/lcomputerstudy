@@ -1,5 +1,8 @@
 package com.lcomputer.testmvc.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,13 +45,23 @@ public class controller extends HttpServlet {
 		String pw = null;
 		String idx = null;
 		
-		String saveDir = "C:\\Users\\l5-morning";
+		/*
+		String saveDir = "C:\\Users\\l5-morning\\Documents\\work11\\lcomputerstudy\\src\\main\\webapp\\img";
+		String enctype = "utf-8";
+		System.out.println("saveDir" + saveDir);
 		int size = 10 * 1024 * 1024;
-		//MultipartRequest multi = new MultipartRequest(request, saveDir, size, "utf-8", new DefaultFileRenamePolicy());
-		//String name = multi.getFilesystemName("b_filename");
-		//String origin = multi.getOriginalFileName("b_filename");
+		MultipartRequest multi = new MultipartRequest(request, saveDir, size, enctype, new DefaultFileRenamePolicy());
+		
+		String b_title = multi.getParameter("b_title");
+		String b_content = multi.getParameter("b_content");
+		String b_filename = multi.getFilesystemName("b_filename");
+		String origin = multi.getOriginalFileName("b_filename");
 		//long fileSize = multi.getFile("b_filename").length();
 		
+		System.out.println(b_title);
+		System.out.println(b_content);
+		System.out.println(origin);
+		*/
 		HttpSession session = null;
 		UserService userService = null;
 		BoardService boardService = null;
@@ -300,13 +313,33 @@ public class controller extends HttpServlet {
 				
 				session = request.getSession();
 				user = (User)session.getAttribute("user");
-				/*User user5 = new User();
-				user5.setU_idx(user.getU_idx());*/
+				
+				String saveDir = "C:\\Users\\l5-morning\\Documents\\work11\\lcomputerstudy\\src\\main\\webapp\\img";
+				String enctype = "utf-8";
+				System.out.println("saveDir" + saveDir);
+				int size = 10 * 1024 * 1024;
+				MultipartRequest multi = new MultipartRequest(request, saveDir, size, enctype, new DefaultFileRenamePolicy());
+				
+				String b_title = multi.getParameter("b_title");
+				String b_content = multi.getParameter("b_content");
+				String b_filename = multi.getFilesystemName("b_filename");
+				String origin = multi.getOriginalFileName("b_filename");
+				//long fileSize = multi.getFile("b_filename").length();
+				
+				System.out.println(b_title);
+				System.out.println(b_content);
+				System.out.println(origin);
 				
 				Board board = new Board();
-				board.setB_title(request.getParameter("b_title"));
-				board.setB_content(request.getParameter("b_content"));
-				board.setB_filename(request.getParameter("b_filename"));
+				board.setB_title(b_title);
+				board.setB_content(b_content);
+				board.setB_filename(b_filename);
+				//board.setB_title(request.getParameter(b_title));
+				//board.setB_content(request.getParameter(b_content));
+				//board.setB_filename(request.getParameter(b_filename));
+				//board.setB_title(request.getParameter("b_title"));
+				//board.setB_content(request.getParameter("b_content"));
+				//board.setB_filename(request.getParameter("b_filename"));
 				board.setUser(user);
 				
 				boardService = BoardService.getInstance();
@@ -314,7 +347,29 @@ public class controller extends HttpServlet {
 				
 				view = "board/board-insert-result";
 				
+				request.setAttribute("board", board);
+				
 				break;
+				
+				// 파일 업로드					
+			case "/board-fileUpload.do":
+							
+				session = request.getSession();
+				user = (User)session.getAttribute("user");
+								
+				Board board300 = new Board();
+				//board300.setB_filename(request.getParameter("b_filename"));
+				board300.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				boardService = BoardService.getInstance();
+								
+				boardService.fileUpload(board300);
+								
+				view = "board/board-fileUpload";
+								
+				request.setAttribute("board", board300);
+								
+				break;				
+				
 				
 			// 상세 화면					
 			case "/board-detail.do":
@@ -342,28 +397,7 @@ public class controller extends HttpServlet {
 				request.setAttribute("board", board3);
 				request.setAttribute("commentList", commentList);
 				
-				break;
-
-				
-			// 파일 업로드					
-			case "/board-fileUpload.do":
-				
-				session = request.getSession();
-				user = (User)session.getAttribute("user");
-				
-				Board board300 = new Board();
-				board300.setB_filename(request.getParameter("b_filename"));
-				board300.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				boardService = BoardService.getInstance();
-				
-				boardService.fileUpload(board300);
-				
-				view = "board/board-fileUpload";
-				
-				request.setAttribute("board", board300);
-				
-				break;
-				
+				break;				
 				
 			// 수정 화면					
 			case "/board-edit.do":
